@@ -1,0 +1,52 @@
+# gm_c01_a__interlog_arithmetic.txt: prepared by Kinya MIURA 230410
+# -----------------------------------------------------------------------------
+*** interactive log of arithmetic operations and some basics ***
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+## --- block_a: operating arithmetic calculations ---
+>>> 3 + 2
+5
+>>> 3 * 2
+6
+>>> 3 + 2, 3 * 2
+(5, 6)
+>>> 3 + 3, 3 * 2, 3 - 2, 3 / 2
+(5, 6, 1, 1.5)
+
+# -----------------------------------------------------------------------------
+## --- block_b: operating arithmetic calculations with variables ---
+>>> a, b = 3, 2
+>>> a, b
+(3, 2)
+>>> smm, sub, mul, div = a + b, a - b, a * b, a / b  # four variables
+>>> smm, sub, mul, div
+(5, 1, 6, 1.5)
+>>> (smm + sub) / 2, (smm - sub) / 2
+(3.0, 2.0)
+>>> result = a + b, a - b, a * b, a / b  # variable as 'tuple'
+>>> result
+(5, 1, 6, 1.5)
+>>> (result[0] + result[1]) / 2, (result[0] - result[1]) / 2
+(3.0, 2.0)
+
+# -----------------------------------------------------------------------------
+## --- block_c: using 'function' ---
+>>> def func(n):  # number, square and cubic as 'tuple'
+...     sqr, cub = n*n, n*n*n  # calculating square and cube
+...     return n, sqr, cub  # returning three varues
+...               # empty line is needed
+>>> func(5)
+(5, 25, 125)
+
+# -----------------------------------------------------------------------------
+## --- block_d: using 'for-loop' ---
+>>> for i in range(5):  # i = 0 -> (5-1)
+...     print(func(i))  # printing results
+...             # empty line is needed
+0 0 0  # results of calculation
+1 1 1
+2 4 8
+3 9 27
+4 16 64
+

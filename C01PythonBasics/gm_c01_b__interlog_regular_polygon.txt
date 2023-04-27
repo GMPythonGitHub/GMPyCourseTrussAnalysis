@@ -1,0 +1,44 @@
+# gm_c01_b__interlog_regular_polygon.txt: prepared by Kinya MIURA 230410
+# -----------------------------------------------------------------------------
+*** interactive log of arithmetic operations and some basics ***
+# -----------------------------------------------------------------------------
+
+# -----------------------------------------------------------------------------
+## --- block_a: triangle and square ---
+>>> aa = 2  # side length
+>>> ss = aa * (aa * 3**.5 / 2) / 2, aa * aa
+  # areas of an equilateral triangle and a square
+>>> ss
+(1.7320508075688772, 4)
+
+# -----------------------------------------------------------------------------
+## --- block_b: importing items from standard module 'math' ---
+>>> from math import (pi, cos, sin)
+  # importing items from standard module 'math'
+>>> pi
+3.141592653589793
+>>> sin(pi/2), cos(pi)
+(1.0, -1.0)
+
+# -----------------------------------------------------------------------------
+## --- block_c: area of n-th regular polygon ---
+>>> rr = 2  # radius of circumscribed circle
+>>> nn = 3  # number of sides
+>>> th = 2 * pi / nn
+>>> ss_tri = 1 /2 * (2 * rr * sin(th/2)) * (rr * cos(th/2))
+>>> ss = nn * ss_tri
+>>> ss
+5.196152422706633
+
+# -----------------------------------------------------------------------------
+## --- block_d: calculating a series of polygon areas ---
+>>> for nn in range(3,6):
+...     th = 2 * pi / nn
+...     ss_tri = rr * sin(th/2) * rr * cos(th/2)
+...     ss = ss_tri * nn
+...     print(nn, rr, ss)
+...
+3 2 5.196152422706633
+4 2 8.000000000000002
+5 2 9.510565162951536
+
