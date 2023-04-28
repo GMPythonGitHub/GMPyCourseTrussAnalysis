@@ -1,6 +1,6 @@
 # gm_c01_a__interlog_arithmetic.txt: prepared by Kinya MIURA 230410
 # -----------------------------------------------------------------------------
-*** interactive log of arithmetic operations and some basics ***
+*** interactive log of arithmetic operations and Python basics ***
 # -----------------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------

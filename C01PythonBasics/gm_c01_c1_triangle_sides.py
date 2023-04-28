@@ -4,7 +4,7 @@ print('\n*** calculation of triangle from side lengths ***')
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-print('\n## --- block__: importing item from module ---')
+print('\n## --- block__: importing items from module ---')
 import sys
 from numpy import (sqrt, arccos, rad2deg as r2d)
 
@@ -37,15 +37,11 @@ print(f'Area: S = {area:g}')
 '''
 *** calculation of triangle from side lengths ***
 # -----------------------------------------------------------------------------
-
-## --- block__: importing library ---
-
+## --- block__: importing items from module ---
 ## --- block_a: setting side lengths ---
 Side length: a, b, c = 3, 4, 5
-
 ## --- block_b: calculating angles ---
 Angles: A, B, C = 36.8699, 53.1301, 90 (deg)
-
 ## --- block_c: calculating area ---
 Area: S = 6
 '''

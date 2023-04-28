@@ -10,7 +10,7 @@ ss = aa * (aa*3**.5/2) / 2, aa * aa  # equilateral triangle and a square
 print('aa = ', aa, ', ss = ', ss)
 
 # -----------------------------------------------------------------------------
-print("\n## --- block_b: importing item from standard module math ---")
+print("\n## --- block_b: importing items from standard module math ---")
 from math import (pi, cos, sin)  # importing items from standard module 'math'
 print('pi = ', pi, ', sin(pi/2) = ', sin(pi/2), ', cos(pi) = ', cos(pi))
 
@@ -38,16 +38,12 @@ print('circle: ss = ', pi * rr * rr)
 '''
 *** area of regular polygon ***
 # -----------------------------------------------------------------------------
-
 ## --- block_a: triangle and square --- ##
 aa =  2 , ss =  (1.7320508075688772, 4)
-
-## --- block_b: importing items from standard module 'math' ---
+## --- block_b: importing items from standard module math ---
 pi =  3.141592653589793 , sin(pi/2) =  1.0 , cos(pi) =  -1.0
-
 ## --- block_c: area of n-th regular polygon ---
 rr =  2 nn =  3 ss =  5.196152422706633
-
 ## --- block_d: calculating a series of polygon areas ---
 nn =  3 ,	rr =  2 ,	ss =  5.196152422706633
 nn =  4 ,	rr =  2 ,	ss =  8.000000000000002

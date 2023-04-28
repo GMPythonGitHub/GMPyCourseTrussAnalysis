@@ -1,6 +1,6 @@
 # gm_c01_a_arithmetic.py: coded by Kinya MIURA 230410
 # -----------------------------------------------------------------------------
-print('\n*** arithmetic operations and some basics ***')
+print('\n*** arithmetic operations and Python basics ***')
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
@@ -47,28 +47,24 @@ else:
 # -----------------------------------------------------------------------------
 # terminal log
 '''
-*** arithmetic operations and some basics ***
+*** arithmetic operations and Python basics ***
 # -----------------------------------------------------------------------------
-
 ## --- block_a: operating arithmetic operations ---
 smm, sub, mul, div =  5 1 6 1.5
 (smm-sub)/2, (smm-sub)/2 =  3.0 2.0
 result =  (5, 1, 6, 1.5)
 (result[0]+result[1])/2 =  3.0
 (result[0]-result[1])/2 =  2.0
-
 ## --- block_b: using 'function' ---
 func(1) =  (1, 1, 1)
 func(2) =  (2, 4, 8)
 func(3) =  (3, 9, 27)
-
 ## --- block_c: using 'for-loop' ---
 (n, n*n, n*n*n, ss) =  (0, 0, 0) 0
 (n, n*n, n*n*n, ss) =  (1, 1, 1) 1
 (n, n*n, n*n*n, ss) =  (2, 4, 8) 3
 (n, n*n, n*n*n, ss) =  (3, 9, 27) 6
 (n, n*n, n*n*n, ss) =  (4, 16, 64) 10
-
 ## --- block_d: using 'if-structure' ---
 a, b, c =  1 4 5
 c >= a + b
