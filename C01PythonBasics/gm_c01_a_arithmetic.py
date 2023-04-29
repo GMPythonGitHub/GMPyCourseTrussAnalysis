@@ -6,9 +6,9 @@ print('# -----------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 print('\n## --- block_a: operating arithmetic operations ---')
 a, b = 3, 2
-smm, sub, mul, div = a+b, a-b, a*b, a/b  # four variables
-print('smm, sub, mul, div = ', smm, sub, mul, div)
-print('(smm-sub)/2, (smm-sub)/2 = ', (smm+sub) / 2, (smm-sub) / 2)
+add, sub, mul, div = a+b, a-b, a*b, a/b  # four variables
+print('add, sub, mul, div = ', add, sub, mul, div)
+print('(add-sub)/2, (add-sub)/2 = ', (add+sub) / 2, (add-sub) / 2)
 result = a+b, a-b, a*b, a/b  # variable as 'tuple'
 print('result = ', result)
 print('(result[0]+result[1])/2 = ', (result[0]+result[1])/2)
