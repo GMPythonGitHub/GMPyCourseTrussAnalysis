@@ -28,7 +28,7 @@ ax.set_xlabel('x'); ax.set_ylabel('y')
 ax.scatter(xxi, yyi, marker='o', s=4., color='C0', edgecolor='C0')
 ax.scatter(xxo, yyo, marker='o', s=4., color='C1', edgecolor='C1')
 ptc = pat.Arc(
-    xy=[0,0], width=2, height=2, theta1=0, theta2=90,
+    xy=(0,0), width=2, height=2, theta1=0, theta2=90,
     linestyle='--', linewidth=1., edgecolor='C2')
 ax.add_patch(ptc)
 ax.set_aspect('equal')
