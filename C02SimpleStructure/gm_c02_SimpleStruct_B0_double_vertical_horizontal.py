@@ -4,7 +4,7 @@ print('\n*** solving Simple Structure B0: double members vertical and horizontal
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-print('## --- block_a: setting member a  ---')
+print('## --- section_a: setting member a  ---')
 lnga = 2.  # length (m)
 print(f'lnga (m) = {lnga:g}')
 araa = 10.  # sectional area (cm^2)
@@ -13,7 +13,7 @@ ynga = 205.  # Young's modulus (kN/mm^2)
 print(f'ynga (kN/mm^2) = {ynga:g}'); ynga *= 1e9  # (kN/mm^2 > N/m^2)
 
 # -----------------------------------------------------------------------------
-print('\n## --- block_b: setting member b  ---')
+print('\n## --- section_b: setting member b  ---')
 lngb = 1.  # length (m)
 print(f'lngb (m) = {lngb:g}')
 arab = 10.  # sectional area (cm^2)
@@ -22,13 +22,13 @@ yngb = 205.  # Young's modulus (kN/mm^2)
 print(f'yngb (kN/mm^2) = {yngb:g}'); yngb *= 1e9  # (kN/mm^2 > N/m^2)
 
 # -----------------------------------------------------------------------------
-print('\n## --- block_c: setting external force on node B  ---')
+print('\n## --- section_c: setting external force on node B  ---')
 frcx, frcy = 100., 50.  # force components (kN)
 print(f'frcx, frcy (kN) = {frcx:g}, {frcy:g}')
 frcx *= 1e3; frcy *= 1e3  # (kN > N) multiple statement
 
 # -----------------------------------------------------------------------------
-print('\n## --- block_d: calculating behavior  ---')
+print('\n## --- section_d: calculating behavior  ---')
 rfca, rfcc = -frcy, -frcx  # reaction forces (kN)
 print(f'rfca, rfcb (kN) = {rfca/1e3:g}, {rfcc/1e3:g}')
 afca, afcb = -rfca, -rfcc  # axial force (kN)
@@ -46,20 +46,20 @@ print(f'dspbx, dspby (mm) = {dspbx/1e-3:g}, {dspby/1e-3:g}')
 '''
 *** solving Simple Structure B0: double members vertical and horizontal ***
 # -----------------------------------------------------------------------------
-## --- block_a: setting member a  ---
+## --- section_a: setting member a  ---
 lnga (m) = 2
 araa (cm^2) = 10
 ynga (kN/mm^2) = 205
 
-## --- block_b: setting member b  ---
+## --- section_b: setting member b  ---
 lngb (m) = 1
 arab (cm^2) = 10
 yngb (kN/mm^2) = 205
 
-## --- block_c: setting external force on node B  ---
+## --- section_c: setting external force on node B  ---
 frcx, frcy (kN) = 100, 50
 
-## --- block_d: calculating behavior  ---
+## --- section_d: calculating behavior  ---
 rfca, rfcb (kN) = -50, -100
 afca, afcb (kN) = 50, 100
 sgma, sgmb (kN/m^2) = 50000, 100000

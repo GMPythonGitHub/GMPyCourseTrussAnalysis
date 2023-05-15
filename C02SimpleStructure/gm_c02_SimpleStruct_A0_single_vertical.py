@@ -4,7 +4,7 @@ print('\n*** solving Simple Structure A0: single member vertical ***')
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-print('## --- block_a: setting member ---')
+print('## --- section_a: setting member ---')
 lng = 1.  # length (m)
 print('lng(m) = ', lng)
 ara = 10. * 1e-4  # sectional area (cm^2 > m^2)
@@ -15,7 +15,7 @@ frc = 100. * 1e3 # force vertical (kN > N)
 print('frc(N) = ', frc)
 
 # -----------------------------------------------------------------------------
-print('\n## --- block_b: calculating behavior ---')
+print('\n## --- section_b: calculating behavior ---')
 rfc = -frc  # reaction force (N)
 print('rfc(N) = ', rfc)
 afc = -rfc  # axial force (N)
@@ -34,13 +34,13 @@ print('dsp(m) = ', dsp)
 '''
 *** solving Simple Structure A0: single member vertical ***
 # -----------------------------------------------------------------------------
-## --- block_a: setting member ---
+## --- section_a: setting member ---
 lng(m) =  1.0
 ara(m^2) =  0.001
 yng(N/m^2) =  205000000000.0
 frc(N) =  100000.0
 
-## --- block_b: calculating behavior ---
+## --- section_b: calculating behavior ---
 rfc(N) =  -100000.0
 afc(N) =  100000.0
 sgm(N/m^2) =  100000000.0

@@ -4,7 +4,7 @@ print('\n*** solving Simple Structure C2: double members vertical thermal expans
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-print('## --- block_a: setting member a  --- *')
+print('## --- section_a: setting member a  --- *')
 lnga, araa, ynga = 2., 10., 205.
 # length (m), sectional area (cm^2), Young's modulus (kN/mm^2)
 lnga, araa, ynga = lnga, araa * 1e-4, ynga * 1e9  # converting unit: (m), (m^2), (N/m^2)
@@ -13,7 +13,7 @@ alpa, tmpa = 11.7, 10.
 alpa, tmpa = alpa * 1e-6, tmpa
 
 # -----------------------------------------------------------------------------
-print('## --- block_b: setting member b  --- *')
+print('## --- section_b: setting member b  --- *')
 lngb, arab, yngb = 1., 10., 205.
 # length (m), sectional area (cm^2), Young's modulus (kN/mm^2)
 lngb, arab, yngb = lngb, arab * 1e-4, yngb * 1e9  # converting unit: (m), (m^2), (N/m^2)
@@ -22,12 +22,12 @@ alpb, tmpb = 11.7, 10.
 alpb, tmpb = alpb * 1e-6, tmpb
 
 # -----------------------------------------------------------------------------
-print('## --- block_c: setting external force on nodes B and C --- *')
+print('## --- section_c: setting external force on nodes B and C --- *')
 frcb = 100.  # external forces (kN)
 frcb = frcb * 1e3  # converting unit: (N)
 
 # -----------------------------------------------------------------------------
-print('## --- block_d: calculating behavior  --- *')
+print('## --- section_d: calculating behavior  --- *')
 rfcc = (
     - (frcb * (lnga/ynga/araa) + alpa*tmpa*lnga + alpb*tmpb*lngb)
     / (lnga/ynga/araa + lngb/yngb/arab) )
@@ -39,7 +39,7 @@ dlta, dltb = epsa * lnga, epsb * lngb
 dspb = dlta
 
 # -----------------------------------------------------------------------------
-print('## --- block_e: printing calculation results  ---')
+print('## --- section_e: printing calculation results  ---')
 print(
     ':: member a : \n'
     f'\tlnga (m) = {lnga:5g}, araa (cm^2) = {araa/1e-4:5g}, ynga (kN/mm^2) = {ynga/1e9:5g}, \n'
@@ -67,11 +67,11 @@ print(
 '''
 *** solving Simple Structure C2: double members vertical thermal expansion ***
 # -----------------------------------------------------------------------------
-## --- block_a: setting member a  --- *
-## --- block_b: setting member b  --- *
-## --- block_c: setting external force on nodes B and C --- *
-## --- block_d: calculating behavior  --- *
-## --- block_e: printing calculation results  ---
+## --- section_a: setting member a  --- *
+## --- section_b: setting member b  --- *
+## --- section_c: setting external force on nodes B and C --- *
+## --- section_d: calculating behavior  --- *
+## --- section_e: printing calculation results  ---
 :: member a : 
 	lnga (m) =     2, araa (cm^2) =    10, ynga (kN/mm^2) =   205, 
 	alpa (10^-6/K) =  11.7, tmpa (K) =    10, 

@@ -4,24 +4,24 @@ print('\n*** solving Simple Structure C1: double members vertical indeterminate 
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-print('## --- block_a: setting member a  ---')
+print('## --- section_a: setting member a  ---')
 lnga, araa, ynga = 2., 10., 205.
 # length (m), sectional area (cm^2), Young's modulus (kN/mm^2)
 lnga, araa, ynga = lnga, araa * 1e-4, ynga * 1e9  # converting unit: (m), (m^2), (N/m^2)
 
 # -----------------------------------------------------------------------------
-print('## --- block_b: setting member b  ---')
+print('## --- section_b: setting member b  ---')
 lngb, arab, yngb = 1., 10., 205.
 # length (m), sectional area (cm^2), Young's modulus (kN/mm^2)
 lngb, arab, yngb = lngb, arab * 1e-4, yngb * 1e9  # converting unit: (m), (m^2), (N/m^2)
 
 # -----------------------------------------------------------------------------
-print('## --- block_c: setting external force on nodes B and C --- *')
+print('## --- section_c: setting external force on nodes B and C --- *')
 frcb = 100.  # external forces (kN)
 frcb = frcb * 1e3  # converting unit: (N)
 
 # -----------------------------------------------------------------------------
-print('## --- block_d: calculating behavior  --- *')
+print('## --- section_d: calculating behavior  --- *')
 rfcc = (
     - frcb * (lnga/ynga/araa)
     / (lnga/ynga/araa + lngb/yngb/arab) )
@@ -33,7 +33,7 @@ dlta, dltb = epsa * lnga, epsb * lngb
 dspb = dlta
 
 # -----------------------------------------------------------------------------
-print('## --- block_e: printing calculation results  ---')
+print('## --- section_e: printing calculation results  ---')
 print(
     ':: member a : \n'
     f'\tlnga (m) = {lnga:5g}, araa (cm^2) = {araa/1e-4:5g}, ynga (kN/mm^2) = {ynga/1e9:5g}, \n'
@@ -59,11 +59,11 @@ print(
 '''
 *** solving Simple Structure C1: double members vertical indeterminate structure ***
 # -----------------------------------------------------------------------------
-## --- block_a: setting member a  ---
-## --- block_b: setting member b  ---
-## --- block_c: setting external force on nodes B and C --- *
-## --- block_d: calculating behavior  --- *
-## --- block_e: printing calculation results  ---
+## --- section_a: setting member a  ---
+## --- section_b: setting member b  ---
+## --- section_c: setting external force on nodes B and C --- *
+## --- section_d: calculating behavior  --- *
+## --- section_e: printing calculation results  ---
 :: member a : 
 	lnga (m) =     2, araa (cm^2) =    10, ynga (kN/mm^2) =   205, 
 	afca (kN) = 33.3333, sgma (kN/m^2) = 33333.3, 

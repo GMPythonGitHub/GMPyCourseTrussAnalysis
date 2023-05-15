@@ -4,11 +4,11 @@ print('\n*** solving Simple Structure D0: single member diagonal ***')
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-print("## --- block__: importing items from 'numpy'  ---")
+print("## --- section__: importing items from 'numpy'  ---")
 from numpy import (cos, sin, tan, arctan, rad2deg, deg2rad, sqrt)
 
 # -----------------------------------------------------------------------------
-print('## --- block_a: setting member  ---')
+print('## --- section_a: setting member  ---')
 lngh, lngv = 1., 0.75
 # horizontal and vertical lengths (m)
 lng, tht = sqrt(lngh**2 + lngv**2), arctan(lngv/lngh)
@@ -18,12 +18,12 @@ ara, yng = 10., 205.
 ara, yng = ara * 1e-4, yng * 1e9  # converting unit: (m^2), (N/m^2)
 
 # -----------------------------------------------------------------------------
-print('## --- block_b: setting external force on node B ---')
+print('## --- section_b: setting external force on node B ---')
 frcb = 100.  # external forces on node b (kN)
 frcb = frcb * 1e3  # converting unit: (N)
 
 # -----------------------------------------------------------------------------
-print('## --- block_d: calculating behavior  ---')
+print('## --- section_d: calculating behavior  ---')
 rfcbx = frcb * tan(tht)
 rfcax, rfcay = - rfcbx, - frcb
 afc = - rfcax * sin(tht) - rfcay * cos(tht)
@@ -33,7 +33,7 @@ dlt = eps * lng
 dspby = dlt / sin(tht)
 
 # -----------------------------------------------------------------------------
-print('## --- block_e: printing calculation results  ---')
+print('## --- section_e: printing calculation results  ---')
 print(
     ':: member : \n'
     f'\tlngh (m) = {lngh:5g}, lngv (m) = {lngv:5g}, '
@@ -54,11 +54,11 @@ print(
 '''
 *** solving Simple Structure D0: single member diagonal ***
 # -----------------------------------------------------------------------------
-## --- block__: importing items from 'numpy'  ---
-## --- block_a: setting member  ---
-## --- block_b: setting external force on node B ---
-## --- block_d: calculating behavior  ---
-## --- block_e: printing calculation results  ---
+## --- section__: importing items from 'numpy'  ---
+## --- section_a: setting member  ---
+## --- section_b: setting external force on node B ---
+## --- section_d: calculating behavior  ---
+## --- section_e: printing calculation results  ---
 :: member : 
 	lngh (m) =     1, lngv (m) =  0.75, lng (m) =  1.25, tht (deg) = 36.8699, 
 	ara (cm^2) =    10, yng (kN/mm^2) =   205, 
