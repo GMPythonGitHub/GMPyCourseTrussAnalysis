@@ -53,12 +53,13 @@ class GMVectorB():
 print('\n## --- section_b: (GMVectorB) creating class instance ---')
 vecta = GMVectorB(xxyy=(1., 1.)); print('vecta: ', vecta)
 vectb = GMVectorB(rrth=(2., 30.)); print('vectb: ', vectb)
-vectc = GMVectorB(rrth=(2., 120.)); print('vectb: ', vectb)
+vectc = GMVectorB(rrth=(2., 120.)); print('vectc: ', vectc)
 
 # -----------------------------------------------------------------------------
 print('\n## --- section_c: calculating unit vectors ---')
 print(f'{vecta.uvct() = }')
 print(f'{vectb.uvct() = }')
+print(f'{vectc.uvct() = }')
 
 # =============================================================================
 # terminal log / terminal log / terminal log /

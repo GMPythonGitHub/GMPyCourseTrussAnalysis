@@ -9,7 +9,7 @@ class GMNumbersD():
     # -----------------------------------------------------------------------------
     print('## --- section_a1: initializing class instance ---')
     def __init__(self, aa: int = 3, bb: int = 2) -> None:
-        self__aa, self.__bb = None, None  # declaring instance variables
+        self.__aa, self.__bb = None, None  # declaring instance variables
         self.set_aabb(aa, bb)  # initializing instance variables
 
     # -----------------------------------------------------------------------------
