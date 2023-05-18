@@ -1,4 +1,4 @@
-# gm_c05_b0_vector.py: coded by Kinya MIURA 230428
+## gm_c05_b0_vector.py: coded by Kinya MIURA 230517
 # -----------------------------------------------------------------------------
 print('\n*** (GMVector) class for vector ***')
 print('# -----------------------------------------------------------------------------')
@@ -6,8 +6,9 @@ print('# -----------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 print('## --- section__: (GMVector) importing items from module ---')
 from numpy import (
-    square, sqrt, sin, cos, arctan2 as atan2,
-    deg2rad as d2r, rad2deg as r2d, ndarray, array )
+    square, sqrt, sin, cos, arccos as acos, arctan2 as atan2,
+    deg2rad as d2r, rad2deg as r2d,
+    ndarray, array, dot, cross as crs, tensordot as tsr )
 
 # -----------------------------------------------------------------------------
 print('## --- section_a: (GMVector) defining class ---')
@@ -25,26 +26,54 @@ class GMVector():
     def set_xxyy(self, xxyy: tuple) -> None:
         self.__xxyy = array(xxyy)
     def set_rrth(self, rrth: tuple, cnv: bool = True) -> None:
-        rr, th = rrth
-        if cnv: th = d2r(th)
-        self.__xxyy = rr * array([cos(th), sin(th)])
-    def set_vector(self, xxyy: tuple = None, rrth: tuple = None, cnv: bool = True) -> None:
+        if len(rrth) == 2:
+            rr, th = rrth
+            if cnv: th = d2r(th)
+            self.__xxyy = rr * array((cos(th), sin(th)))
+        elif len(rrth) == 3:
+            rr, th, ph = rrth
+            if cnv: th, ph = d2r(th), d2r(ph)
+            self.__xxyy = rr * array((sin(ph)*cos(th), sin(ph)*sin(th), cos(ph)))
+        else:
+            self.__xxyy = None
+    def set_vector(self,
+            xxyy: tuple = None, rrth: tuple = None, cnv: bool = True) -> None:
         if rrth is not None:
-            xxyy = None; self.set_rrth(rrth, cnv=cnv)
-        if xxyy is not None: self.set_xxyy(xxyy)
+            self.set_rrth(rrth)
+        elif xxyy is not None:
+            self.set_xxyy(xxyy)
+        else: pass
+
     ## getting functions
     def xxyy(self) -> ndarray:
         return self.__xxyy
     def rrth(self, cnv: bool = True) -> ndarray:
-        rr, th = sqrt(sum(square(self.__xxyy))), atan2(self.__xxyy[1], self.__xxyy[0])
-        if cnv: th = r2d(th)
-        return array([rr, th])
+        rr = sqrt(dot(self.__xxyy,self.__xxyy))
+        if len(self.__xxyy) == 2:
+            xx, yy = self.__xxyy
+            th = atan2(yy, xx)
+            if cnv: th = r2d(th)
+            return array((rr, th))
+        elif len(self.__xxyy) == 3:
+            xx, yy, zz = self.__xxyy
+            th, ph = atan2(yy,xx), acos(zz/rr)
+            if cnv: th, ph = r2d(th), r2d(ph)
+            return array((rr, th, ph))
+        else: return None
 
     # -----------------------------------------------------------------------------
     print('## --- section_a3: (GMVector) string function for print() ---')
     def __str__(self) -> str:
-        xx, yy = self.__xxyy; rr, th = self.rrth(cnv=True)
-        return f'GMVector:: (xx,yy) = ({xx:g}, {yy:g}), (rr,th) = ({rr:g}, {th:g})'
+        if (len(self.__xxyy)) == 2:
+            xx, yy = self.__xxyy; rr, th = self.rrth(cnv=True)
+            return (
+                f'GMVector:: (xx,yy) = ({xx:g}, {yy:g}), '
+                f'(rr,th) = ({rr:g}, {th:g})' )
+        elif len(self.__xxyy) == 3:
+            xx, yy, zz = self.__xxyy; rr, th, ph = self.rrth(cnv=True)
+            return (
+                f'GMVector:: (xx,yy,zz) = ({xx:g}, {yy:g}, {zz:g}), '
+                f'(rr,th,ph) = ({rr:g}, {th:g}, {ph:g})' )
 
     # -----------------------------------------------------------------------------
     print('## --- section_a4: (GMVector) operating vectors ---')
@@ -83,14 +112,14 @@ class GMVector():
     # -----------------------------------------------------------------------------
     print('## --- section_a6: (GMVector) calculating unit vector and products ---')
     def unitvect(self) -> ndarray:
-        rr, _ = self.rrth()
+        rr, *_ = self.rrth()
         return self.__xxyy / rr if rr > 0. else None
-    def dottprod(self, vect: object = None) -> float:
-        xx, yy = self.__xxyy; vxx, vyy = vect.xxyy()
-        return xx * vxx + yy * vyy
-    def vectprod(self, vect: object = None) -> float:
-        xx, yy = self.__xxyy; vxx, vyy = vect.xxyy()
-        return xx * vyy - yy * vxx
+    def dottprod(self, vect: object) -> ndarray:  # dot product (inner)
+        return dot(self.__xxyy, vect.xxyy())
+    def crosprod(self, vect: object) -> ndarray:  # cross product (outer)
+        return crs(self.__xxyy, vect.xxyy())
+    def tnsrprod(self, vect: object) -> ndarray:  # tensor product
+        return tsr(self.__xxyy, vect.xxyy(), axes=0)
 
 # =============================================================================
 # =============================================================================
@@ -98,45 +127,23 @@ if __name__ == '__main__':
     # -----------------------------------------------------------------------------
     print('\n## --- section_b: creating class instances ---')
     vecta = GMVector(xxyy=(1., 1.)); print('vecta: ', vecta)
-    vectb = GMVector(xxyy=(1., 2.)); print('vectb: ', vectb)
+    vectb = GMVector(xxyy=(3., 4.)); print('vectb: ', vectb)
 
     # -----------------------------------------------------------------------------
-    print('\n## --- section_c: operating vectors ---')
-    vecta.set_vector(xxyy=(1., 1.))
-    vecta.add(2); print('vecta.add(2): ', vecta)
-    vecta.add([1, 2]); print('vecta.add([1,2]): ', vecta)
-    vecta.add(vectb); print('vecta.add(vectb): ', vecta)
-    vecta.set_vector(xxyy=(1., 1.)); vecta.sub(vectb); print('vecta.sub(vectb): ', vecta)
-    vecta.set_vector(xxyy=(1., 1.)); vecta.mul(vectb); print('vecta.mul(vectb): ', vecta)
-    vecta.set_vector(xxyy=(1., 1.)); vecta.div(vectb); print('vecta.div(vectb): ', vecta)
+    print('\n## --- section_c: arithmetic calculation of vectors ---')
+    print('vecta + vectb = ', vecta + vectb)
+    print('vecta - vectb = ', vecta - vectb)
+    print('vecta * vectb = ', vecta * vectb)
+    print('vecta / vectb = ', vecta / vectb)
 
     # -----------------------------------------------------------------------------
-    print('\n## --- section_d: operating vectors with operators ---')
-    vecta.set_vector(xxyy=(1., 1.))
-    print(f'vecta + 2: {vecta + 2}')
-    print(f'vecta + [1,2]: {vecta + [1, 2]}')
-    print(f'vecta + vectb: {vecta + vectb}')
-    print(f'vecta - vectb: {vecta - vectb}')
-    print(f'vecta * vectb: {vecta * vectb}')
-    print(f'vecta / vectb: {vecta / vectb}')
-
-    vecta.set_xxyy((1., 1.))
-    vecta += 2; print('vecta += 2: ', vecta)
-    vecta += [1,2]; print('vecta += [1,2]]: ', vecta)
-    vecta += vectb; print('vecta += vectb: ', vecta)
-    vecta.set_xxyy((1., 1.)); vecta -= vectb; print('vecta -= vectb: ', vecta)
-    vecta.set_xxyy((1., 1.)); vecta *= vectb; print('vecta *= vectb: ', vecta)
-    vecta.set_xxyy((1., 1.)); vecta /= vectb; print('vecta /= vectb: ', vecta)
-
-    vecta.set_xxyy((1., 1.)); print('+ vecta: ', + vecta)
-    vecta.set_xxyy((1., 1.)); print('- vecta: ', - vecta)
-
-    # -----------------------------------------------------------------------------
-    print('\n## --- section_e: calculating unit vectors and products ---')
+    print('\n## --- section_d: calculating unit vectors and products ---')
     print(f'{vecta.unitvect() = }')
+    print(f'{vecta.dottprod(vectb) = }, {vecta.crosprod(vectb) = }')
+    print(f'{vecta.tnsrprod(vectb) = }')
     print(f'{vectb.unitvect() = }')
-    print(f'{vecta.dottprod(vectb) = }, {vecta.vectprod(vectb) = }')
-    print(f'{vectb.dottprod(vecta) = }, {vectb.vectprod(vecta) = }')
+    print(f'{vectb.dottprod(vecta) = }, {vectb.crosprod(vecta) = }')
+    print(f'{vectb.tnsrprod(vecta) = }')
 
     # =============================================================================
     # terminal log / terminal log / terminal log /
@@ -154,35 +161,21 @@ if __name__ == '__main__':
     
     ## --- section_b: creating class instances ---
     vecta:  GMVector:: (xx,yy) = (1, 1), (rr,th) = (1.41421, 45)
-    vectb:  GMVector:: (xx,yy) = (1, 2), (rr,th) = (2.23607, 63.4349)
+    vectb:  GMVector:: (xx,yy) = (3, 4), (rr,th) = (5, 53.1301)
     
-    ## --- section_c: operating vectors ---
-    vecta.add(2):  GMVector:: (xx,yy) = (3, 3), (rr,th) = (4.24264, 45)
-    vecta.add([1,2]):  GMVector:: (xx,yy) = (4, 5), (rr,th) = (6.40312, 51.3402)
-    vecta.add(vectb):  GMVector:: (xx,yy) = (5, 7), (rr,th) = (8.60233, 54.4623)
-    vecta.sub(vectb):  GMVector:: (xx,yy) = (0, -1), (rr,th) = (1, -90)
-    vecta.mul(vectb):  GMVector:: (xx,yy) = (1, 2), (rr,th) = (2.23607, 63.4349)
-    vecta.div(vectb):  GMVector:: (xx,yy) = (1, 0.5), (rr,th) = (1.11803, 26.5651)
+    ## --- section_c: arithmetic calculation of vectors ---
+    vecta + vectb =  GMVector:: (xx,yy) = (4, 5), (rr,th) = (6.40312, 51.3402)
+    vecta - vectb =  GMVector:: (xx,yy) = (-2, -3), (rr,th) = (3.60555, -123.69)
+    vecta * vectb =  GMVector:: (xx,yy) = (3, 4), (rr,th) = (5, 53.1301)
+    vecta / vectb =  GMVector:: (xx,yy) = (0.333333, 0.25), (rr,th) = (0.416667, 36.8699)
     
-    ## --- section_d: operating vectors with operators ---
-    vecta + 2: GMVector:: (xx,yy) = (3, 3), (rr,th) = (4.24264, 45)
-    vecta + [1,2]: GMVector:: (xx,yy) = (2, 3), (rr,th) = (3.60555, 56.3099)
-    vecta + vectb: GMVector:: (xx,yy) = (2, 3), (rr,th) = (3.60555, 56.3099)
-    vecta - vectb: GMVector:: (xx,yy) = (0, -1), (rr,th) = (1, -90)
-    vecta * vectb: GMVector:: (xx,yy) = (1, 2), (rr,th) = (2.23607, 63.4349)
-    vecta / vectb: GMVector:: (xx,yy) = (1, 0.5), (rr,th) = (1.11803, 26.5651)
-    vecta += 2:  GMVector:: (xx,yy) = (3, 3), (rr,th) = (4.24264, 45)
-    vecta += [1,2]]:  GMVector:: (xx,yy) = (4, 5), (rr,th) = (6.40312, 51.3402)
-    vecta += vectb:  GMVector:: (xx,yy) = (5, 7), (rr,th) = (8.60233, 54.4623)
-    vecta -= vectb:  GMVector:: (xx,yy) = (0, -1), (rr,th) = (1, -90)
-    vecta *= vectb:  GMVector:: (xx,yy) = (1, 2), (rr,th) = (2.23607, 63.4349)
-    vecta /= vectb:  GMVector:: (xx,yy) = (1, 0.5), (rr,th) = (1.11803, 26.5651)
-    + vecta:  GMVector:: (xx,yy) = (1, 1), (rr,th) = (1.41421, 45)
-    - vecta:  GMVector:: (xx,yy) = (-1, -1), (rr,th) = (1.41421, -135)
-    
-    ## --- section_e: calculating unit vectors and products ---
-    vecta.unitvect() = array([-0.70710678, -0.70710678])
-    vectb.unitvect() = array([0.4472136 , 0.89442719])
-    vecta.dottprod(vectb) = -3.0, vecta.vectprod(vectb) = -1.0
-    vectb.dottprod(vecta) = -3.0, vectb.vectprod(vecta) = 1.0
+    ## --- section_d: calculating unit vectors and products ---
+    vecta.unitvect() = array([0.70710678, 0.70710678])
+    vecta.dottprod(vectb) = 7.0, vecta.crosprod(vectb) = array(1.)
+    vecta.tnsrprod(vectb) = array([[3., 4.],
+           [3., 4.]])
+    vectb.unitvect() = array([0.6, 0.8])
+    vectb.dottprod(vecta) = 7.0, vectb.crosprod(vecta) = array(-1.)
+    vectb.tnsrprod(vecta) = array([[3., 3.],
+           [4., 4.]])
     '''
