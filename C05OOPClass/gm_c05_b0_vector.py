@@ -1,27 +1,28 @@
-## gm_c05_b0_vector.py: coded by Kinya MIURA 230517
+## gm_c05_b0_vector.py: coded by Kinya MIURA 230518
 # -----------------------------------------------------------------------------
-print('\n*** (GMVector) class for vector ***')
-print('# -----------------------------------------------------------------------------')
+print("\n*** (GMVector) class for vector ***")
+print("# -----------------------------------------------------------------------------")
 
 # -----------------------------------------------------------------------------
-print('## --- section__: (GMVector) importing items from module ---')
+print("## --- section__: (GMVector) importing items from module ---")
 from numpy import (
     square, sqrt, sin, cos, arccos as acos, arctan2 as atan2,
     deg2rad as d2r, rad2deg as r2d,
-    ndarray, array, dot, cross as crs, tensordot as tsr )
+    ndarray, array, dot as dott, cross as cros, tensordot as tnsr )
 
 # -----------------------------------------------------------------------------
-print('## --- section_a: (GMVector) defining class ---')
+print("## --- section_a: (GMVector) declaring class ---")
 class GMVector():
     # -----------------------------------------------------------------------------
-    print('## --- section_a1: (GMVector) initializing class instance ---')
+    print("## --- section_b: (GMVector) initializing class instance ---")
     def __init__(self,
             xxyy: tuple = (1., 1.), rrth: tuple = None, cnv: bool = True):
         self.__xxyy = None
+        if isinstance (xxyy, GMVector): xxyy, rrth = xxyy.xxyy(), None
         self.set_vector(xxyy, rrth, cnv=cnv)
 
     # -----------------------------------------------------------------------------
-    print('## --- section_a2: (GMVector) setting and getting functions ---')
+    print("## --- section_c: (GMVector) setting and getting functions ---")
     ## setting functions
     def set_xxyy(self, xxyy: tuple) -> None:
         self.__xxyy = array(xxyy)
@@ -48,7 +49,7 @@ class GMVector():
     def xxyy(self) -> ndarray:
         return self.__xxyy
     def rrth(self, cnv: bool = True) -> ndarray:
-        rr = sqrt(dot(self.__xxyy,self.__xxyy))
+        rr = sqrt(dott(self.__xxyy,self.__xxyy))
         if len(self.__xxyy) == 2:
             xx, yy = self.__xxyy
             th = atan2(yy, xx)
@@ -62,21 +63,25 @@ class GMVector():
         else: return None
 
     # -----------------------------------------------------------------------------
-    print('## --- section_a3: (GMVector) string function for print() ---')
+    print("## --- section_d: (GMVector) string function for print() ---")
     def __str__(self) -> str:
         if (len(self.__xxyy)) == 2:
             xx, yy = self.__xxyy; rr, th = self.rrth(cnv=True)
             return (
-                f'GMVector:: (xx,yy) = ({xx:g}, {yy:g}), '
-                f'(rr,th) = ({rr:g}, {th:g})' )
+                f': (xx,yy) = ({xx:g}, {yy:g}) '
+                f': (rr,th) = ({rr:g}, {th:g})' )
         elif len(self.__xxyy) == 3:
             xx, yy, zz = self.__xxyy; rr, th, ph = self.rrth(cnv=True)
             return (
-                f'GMVector:: (xx,yy,zz) = ({xx:g}, {yy:g}, {zz:g}), '
-                f'(rr,th,ph) = ({rr:g}, {th:g}, {ph:g})' )
+                f': (xx,yy,zz) = ({xx:g}, {yy:g}, {zz:g}) '
+                f': (rr,th,ph) = ({rr:g}, {th:g}, {ph:g})' )
+    def prtcls(self, idx: str = '') -> None:
+        print(
+            idx + ':: GMVector ::\n'
+            + self.__str__() )
 
     # -----------------------------------------------------------------------------
-    print('## --- section_a4: (GMVector) operating vectors ---')
+    print("## --- section_e: (GMVector) operating vectors ---")
     def cnvvect(self, vect: object = None) -> ndarray:
         if type(vect) in (int, float, complex): return vect
         elif type(vect) in (list, tuple, ndarray): return array(vect)
@@ -91,7 +96,7 @@ class GMVector():
         self.__xxyy /= self.cnvvect(vect); return self.xxyy()
 
     # -----------------------------------------------------------------------------
-    print('## --- section_a5: (GMVector) overloading arithmetic operators ---')
+    print("## --- section_f: (GMVector) overloading arithmetic operators ---")
     def __add__(self, vect): return GMVector(xxyy=self.__xxyy+self.cnvvect(vect))
     def __radd__(self, vect): return GMVector(xxyy=self.cnvvect(vect)+self.__xxyy)
     def __sub__(self, vect): return GMVector(xxyy=self.__xxyy-self.cnvvect(vect))
@@ -110,34 +115,36 @@ class GMVector():
     def __neg__(self):  self.__xxyy = - self.__xxyy; return self
 
     # -----------------------------------------------------------------------------
-    print('## --- section_a6: (GMVector) calculating unit vector and products ---')
+    print("## --- section_g: (GMVector) calculating vector ---")
     def unitvect(self) -> ndarray:
         rr, *_ = self.rrth()
         return self.__xxyy / rr if rr > 0. else None
     def dottprod(self, vect: object) -> ndarray:  # dot product (inner)
-        return dot(self.__xxyy, vect.xxyy())
+        return dott(self.__xxyy, vect.xxyy())
     def crosprod(self, vect: object) -> ndarray:  # cross product (outer)
-        return crs(self.__xxyy, vect.xxyy())
+        return cros(self.__xxyy, vect.xxyy())
     def tnsrprod(self, vect: object) -> ndarray:  # tensor product
-        return tsr(self.__xxyy, vect.xxyy(), axes=0)
+        return tnsr(self.__xxyy, vect.xxyy(), axes=0)
 
 # =============================================================================
 # =============================================================================
 if __name__ == '__main__':
     # -----------------------------------------------------------------------------
-    print('\n## --- section_b: creating class instances ---')
-    vecta = GMVector(xxyy=(1., 1.)); print('vecta: ', vecta)
-    vectb = GMVector(xxyy=(3., 4.)); print('vectb: ', vectb)
+    print("\n## --- section_ma: creating class instances ---")
+    vecta = GMVector(xxyy=(1., 1.)); vecta.prtcls('vecta -> ')
+    vectb = GMVector(xxyy=(3., 4.)); vectb.prtcls('vectb -> ')
+    vectc = GMVector(vectb); vectc.prtcls('vectc -> ')
 
     # -----------------------------------------------------------------------------
-    print('\n## --- section_c: arithmetic calculation of vectors ---')
-    print('vecta + vectb = ', vecta + vectb)
-    print('vecta - vectb = ', vecta - vectb)
-    print('vecta * vectb = ', vecta * vectb)
-    print('vecta / vectb = ', vecta / vectb)
+    print("\n## --- section_mb: operating vectors ---")
+    (vecta + vectb).prtcls('vecta + vectb -> ')
+    print(f'{(vecta + vectb).xxyy() = }')
+    print(f'{(vecta - vectb).xxyy() = }')
+    print(f'{(vecta * vectb).xxyy() = }')
+    print(f'{(vecta / vectb).xxyy() = }')
 
     # -----------------------------------------------------------------------------
-    print('\n## --- section_d: calculating unit vectors and products ---')
+    print("\n## --- section_mc: calculating unit vector and product ---")
     print(f'{vecta.unitvect() = }')
     print(f'{vecta.dottprod(vectb) = }, {vecta.crosprod(vectb) = }')
     print(f'{vecta.tnsrprod(vectb) = }')
@@ -151,25 +158,31 @@ if __name__ == '__main__':
     *** (GMVector) class for vector ***
     # -----------------------------------------------------------------------------
     ## --- section__: (GMVector) importing items from module ---
-    ## --- section_a: (GMVector) defining class ---
-    ## --- section_a1: (GMVector) initializing class instance ---
-    ## --- section_a2: (GMVector) setting and getting functions ---
-    ## --- section_a3: (GMVector) string function for print() ---
-    ## --- section_a4: (GMVector) operating vectors ---
-    ## --- section_a5: (GMVector) overloading arithmetic operators ---
-    ## --- section_a6: (GMVector) calculating unit vector and products ---
+    ## --- section_a: (GMVector) declaring class ---
+    ## --- section_b: (GMVector) initializing class instance ---
+    ## --- section_c: (GMVector) setting and getting functions ---
+    ## --- section_d: (GMVector) string function for print() ---
+    ## --- section_e: (GMVector) operating vectors ---
+    ## --- section_f: (GMVector) overloading arithmetic operators ---
+    ## --- section_g: (GMVector) calculating unit vector and products ---
     
-    ## --- section_b: creating class instances ---
-    vecta:  GMVector:: (xx,yy) = (1, 1), (rr,th) = (1.41421, 45)
-    vectb:  GMVector:: (xx,yy) = (3, 4), (rr,th) = (5, 53.1301)
+    ## --- section_ma: creating class instances ---
+    vecta -> :: GMVector ::
+    : (xx,yy) = (1, 1) : (rr,th) = (1.41421, 45)
+    vectb -> :: GMVector ::
+    : (xx,yy) = (3, 4) : (rr,th) = (5, 53.1301)
+    vectc -> :: GMVector ::
+    : (xx,yy) = (3, 4) : (rr,th) = (5, 53.1301)
     
-    ## --- section_c: arithmetic calculation of vectors ---
-    vecta + vectb =  GMVector:: (xx,yy) = (4, 5), (rr,th) = (6.40312, 51.3402)
-    vecta - vectb =  GMVector:: (xx,yy) = (-2, -3), (rr,th) = (3.60555, -123.69)
-    vecta * vectb =  GMVector:: (xx,yy) = (3, 4), (rr,th) = (5, 53.1301)
-    vecta / vectb =  GMVector:: (xx,yy) = (0.333333, 0.25), (rr,th) = (0.416667, 36.8699)
+    ## --- section_mb: operating vectors ---
+    vecta + vectb -> :: GMVector ::
+    : (xx,yy) = (4, 5) : (rr,th) = (6.40312, 51.3402)
+    (vecta + vectb).xxyy() = array([4., 5.])
+    (vecta - vectb).xxyy() = array([-2., -3.])
+    (vecta * vectb).xxyy() = array([3., 4.])
+    (vecta / vectb).xxyy() = array([0.33333333, 0.25      ])
     
-    ## --- section_d: calculating unit vectors and products ---
+    ## --- section_mc: calculating unit vector and product ---
     vecta.unitvect() = array([0.70710678, 0.70710678])
     vecta.dottprod(vectb) = 7.0, vecta.crosprod(vectb) = array(1.)
     vecta.tnsrprod(vectb) = array([[3., 4.],
