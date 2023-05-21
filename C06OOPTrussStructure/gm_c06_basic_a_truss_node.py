@@ -38,7 +38,7 @@ class GMTrussNodeBasic():
     def dirc_2node(self, node: object) -> float:  # direction to node
         post = self.post_2node(node)
         return atan2(post[1],post[0])
-    def uvct_2node(self, node: object) -> list:  # unit vector to node
+    def unitvect_2node(self, node: object) -> list:  # unit vector to node
         dirc = self.dirc_2node(node)
         return [cos(dirc), sin(dirc)]
 
@@ -64,8 +64,8 @@ if __name__ == '__main__':
     print(f'{nodeb.dist_2node(nodea) = }')
     print(f'{nodea.dirc_2node(nodeb) = }')
     print(f'{nodeb.dirc_2node(nodea) = }')
-    print(f'{nodea.uvct_2node(nodeb) = }')
-    print(f'{nodeb.uvct_2node(nodea) = }')
+    print(f'{nodea.unitvect_2node(nodeb) = }')
+    print(f'{nodeb.unitvect_2node(nodea) = }')
 
     # -----------------------------------------------------------------------------
     # -----------------------------------------------------------------------------
@@ -94,6 +94,6 @@ if __name__ == '__main__':
     nodeb.dist_2node(nodea) = 1.4142135623730951
     nodea.dirc_2node(nodeb) = 0.7853981633974483
     nodeb.dirc_2node(nodea) = -2.356194490192345
-    nodea.uvct_2node(nodeb) = [0.7071067811865476, 0.7071067811865476]
-    nodeb.uvct_2node(nodea) = [-0.7071067811865475, -0.7071067811865476]
+    nodea.unitvect_2node(nodeb) = [0.7071067811865476, 0.7071067811865476]
+    nodeb.unitvect_2node(nodea) = [-0.7071067811865475, -0.7071067811865476]
     '''

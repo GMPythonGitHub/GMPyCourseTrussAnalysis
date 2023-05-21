@@ -45,7 +45,7 @@ class GMTrussStructureBasic():
         # building global matrix
         for memb in self.membs:
             stif = memb.calc_stif()
-            lcn = memb.lcn()
+            lcn = memb.vect_lcn()
             for j in range(2 * 2):
                 for k in range(2 * 2):
                     self.stif[lcn[j]][lcn[k]] += stif[j][k]

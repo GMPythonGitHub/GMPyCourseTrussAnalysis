@@ -43,8 +43,8 @@ class GMTrussMemberBasic():
         self.lng = self.nodea.dist_2node(self.nodeb)
         self.tht = self.nodea.dirc_2node(self.nodeb)
     def calc_strt(self) -> None:  # calculating stretch
-        uvct_nodea = self.nodeb.uvct_2node(self.nodea)
-        uvct_nodeb = self.nodea.uvct_2node(self.nodeb)
+        uvct_nodea = self.nodeb.unitvect_2node(self.nodea)
+        uvct_nodeb = self.nodea.unitvect_2node(self.nodeb)
         self.dlt = (
             + self.nodea.dsp[0] * uvct_nodea[0] + self.nodea.dsp[1] * uvct_nodea[1]
             + self.nodeb.dsp[0] * uvct_nodeb[0] + self.nodeb.dsp[1] * uvct_nodeb[1] )
@@ -52,7 +52,7 @@ class GMTrussMemberBasic():
         self.sgm = self.eps * self.yng
         self.afc = self.sgm * self.ara
     def calc_stif(self) -> list:
-        co, sn = self.nodeb.uvct_2node(self.nodea)
+        co, sn = self.nodeb.unitvect_2node(self.nodea)
         cof = self.yng * self.ara / self.lng
         stf = [
             [+co*co*cof, +co*sn*cof, -co*co*cof, -co*sn*cof],
@@ -60,10 +60,8 @@ class GMTrussMemberBasic():
             [-co*co*cof, -co*sn*cof, +co*co*cof, +co*sn*cof],
             [-sn*co*cof, -sn*sn*cof, +sn*co*cof, +sn*sn*cof] ]
         return stf
-    def lcn(self) -> list:
+    def vect_lcn(self) -> list:
         return self.nodea.lcn + self.nodeb.lcn
-    def fxc(self) -> object:
-        return self.nodea.fxc + self.nodeb.fxc
 
 # =============================================================================
 # =============================================================================
@@ -89,8 +87,8 @@ if __name__ == '__main__':
     memb.calc_strt()
     print('memb : \n', memb)
     print(f'{memb.calc_stif() = }')
-    print(f'{memb.lcn() = }')
-    print(f'{memb.fxc() = }')
+    print(f'{memb.vect_lcn() = }')
+
     # -----------------------------------------------------------------------------
     # -----------------------------------------------------------------------------
     # terminal log
@@ -131,6 +129,5 @@ if __name__ == '__main__':
     [-1.255262969126037e-08, 205000000.0, 1.255262969126037e-08, -205000000.0], 
     [-7.68626888614202e-25, 1.255262969126037e-08, 7.68626888614202e-25, -1.255262969126037e-08], 
     [1.255262969126037e-08, -205000000.0, -1.255262969126037e-08, 205000000.0]]
-    memb.lcn() = [0, 1, 2, 3]
-    memb.fxc() = [False, False, False, False]
+    memb.vect_lcn() = [0, 1, 2, 3]
     '''

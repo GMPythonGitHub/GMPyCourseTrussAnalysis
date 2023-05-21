@@ -42,23 +42,21 @@ if __name__ == '__main__':
     print("\n## --- section_ma: creating class instances ---")
     pinta = GMPoint(xxyy=(1., 1.)); pinta.prtcls('pinta -> ')
     pintb = GMPoint(xxyy=(1., 2.)); pintb.prtcls('pintb -> ')
-    pintc = GMPoint(pintb); pintc.prtcls('pintc -> ')
+    pintc = GMPoint(pintb); pintc.prtcls('pintc -> ')  # reproducing pintb as pintc
 
     # -----------------------------------------------------------------------------
     print("\n## --- section_mb: operating points ---")
-    print(f'{(pinta + pintb).xxyy() = }')
-    print(f'{(pinta - pintb).xxyy() = }')
-    print(f'{(pinta * pintb).xxyy() = }')
-    print(f'{(pinta / pintb).xxyy() = }')
+    print(f'{(pinta + pintb).xxyy() = }')  # GMVecto
+    print(f'{(pinta - pintb).xxyy() = }')  # GMVecto
+    print(f'{(pinta * pintb).xxyy() = }')  # GMVecto
+    print(f'{(pinta / pintb).xxyy() = }')  # GMVecto
 
     # -----------------------------------------------------------------------------
     print("\n## --- section_mc: calculating unit distance and unit vector ---")
-    pinta.set_xxyy((1., 1.))
-    pintb.set_xxyy((2., 1.))
-    print(f'{pinta.unitvect() = }')
-    print(f'{pintb.unitvect() = }')
-    print(f'{pinta.dottprod(pintb) = }')
-    print(f'{pinta.crosprod(pintb) = }')
+    print(f'{pinta.unitvect() = }')  # GMVecto
+    print(f'{pintb.unitvect() = }')  # GMVecto
+    print(f'{pinta.dottprod(pintb) = }')  # GMVector
+    print(f'{pinta.crosprod(pintb) = }')  # GMVector
     print(f'{pinta.dist_2pint(pintb) = }')
     print(f'{pintb.dist_2pint(pinta) = }')
     print(f'{pinta.unitvect_2pint(pintb) = }')
@@ -104,11 +102,11 @@ if __name__ == '__main__':
     
     ## --- section_mc: calculating unit distance and unit vector ---
     pinta.unitvect() = array([0.70710678, 0.70710678])
-    pintb.unitvect() = array([0.89442719, 0.4472136 ])
+    pintb.unitvect() = array([0.4472136 , 0.89442719])
     pinta.dottprod(pintb) = 3.0
-    pinta.crosprod(pintb) = array(-1.)
+    pinta.crosprod(pintb) = array(1.)
     pinta.dist_2pint(pintb) = 1.0
     pintb.dist_2pint(pinta) = 1.0
-    pinta.unitvect_2pint(pintb) = array([1., 0.])
-    pintb.unitvect_2pint(pinta) = array([-1.,  0.])
+    pinta.unitvect_2pint(pintb) = array([0., 1.])
+    pintb.unitvect_2pint(pinta) = array([ 0., -1.])
     '''

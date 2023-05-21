@@ -48,6 +48,11 @@ class GMPolygon():
         for pint in self._pints:
             pint_grav += pint.xxyy()
         return pint_grav / len(self._segms)
+    def leng_segms(self) -> float:
+        leng_segms = 0.
+        for segm in self._segms:
+            leng_segms += segm.leng()
+        return leng_segms
     def area_prod(self) -> float:  # area from cross product
         area = 0.
         for segm in self._segms:
@@ -76,6 +81,7 @@ if __name__ == '__main__':
     # -----------------------------------------------------------------------------
     print("## --- section_mb: calculating polygon ---")
     print(f'{polg.pint_grav() = }')
+    print(f'{polg.leng_segms() = }')
     print(f'{polg.area_prod() = }')
     print(f'{polg.area_projxx() = }')
     print(f'{polg.area_projyy() = }')
@@ -183,6 +189,7 @@ if __name__ == '__main__':
     
     ## --- section_mb: calculating polygon ---
     polg.pint_grav() = array([2., 2.])
+    polg.leng_segms() = 12.649110640673518
     polg.area_prod() = 8.0
     polg.area_projxx() = 8.0
     polg.area_projyy() = 8.0
