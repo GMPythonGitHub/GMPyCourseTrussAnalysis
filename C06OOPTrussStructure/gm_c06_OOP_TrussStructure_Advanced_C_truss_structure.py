@@ -149,7 +149,7 @@ class GMTrussStructureAdvanced():
 
         # -----------------------------------------------------------------------------
         print('## --- section_f5: saving and showing figure ---')
-        fig.savefig('gm_c06_OOP_Truess_Structure_Advanced.png')
+        fig.savefig('gm_c06_OOP_TruessStructure_Advanced.png')
         plt.show()
 
 #
