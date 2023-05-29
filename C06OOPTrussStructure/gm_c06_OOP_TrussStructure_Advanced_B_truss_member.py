@@ -29,7 +29,8 @@ class GMTrussMemberAdvanced():
     ## setting functions
     def set_truss_member(self,
             area: float = None, yong: float = None,
-            delt: float = None, epsl: float = None, sigm: float = None, axfc: float = None,
+            delt: float = None, epsl: float = None,
+            sigm: float = None, axfc: float = None,
             cnv: bool = True ) -> None:
         if area is not None:
             self.__area = area * 1e-4 if cnv else area  # (cm^2)
@@ -50,7 +51,7 @@ class GMTrussMemberAdvanced():
     def yong(self, cnv: bool = True) -> float:
         return self.__yong / 1e+9 if cnv else self.__yong  # (kN/mm^2)
     def delt(self, cnv: bool = True) -> float:
-        return self.__delt / 1e-4 if cnv else self.__delt  # (mm)
+        return self.__delt / 1e-3 if cnv else self.__delt  # (mm)
     def epsl(self, cnv: bool = True) -> float:
         return self.__epsl / 1e-3 if cnv else self.__epsl  # (1/1000)
     def sigm(self, cnv: bool = True) -> float:
@@ -63,8 +64,8 @@ class GMTrussMemberAdvanced():
     def __str__(self) -> str:
         st = (
             f'area (cm^2) = {self.area():g}, yong (kN/mm^2) = {self.yong():g} \n'
-            f'delt (mm) = {self.yong():g}, epsl (1/1000) = {self.epsl():g}, '
-            f'sigm (kN/m^2) = {self.sigm():g}, axfc = {self.axfc():g} ' )
+            f'delt (mm) = {self.delt():g}, epsl (1/1000) = {self.epsl():g}, '
+            f'sigm (kN/m^2) = {self.sigm():g}, axfc(kN) = {self.axfc():g} ' )
         return st
     def prtcls(self, idx: str = '') -> None:
         print(idx + ':: GMTrussMemberAdvanced ::')
@@ -78,10 +79,12 @@ class GMTrussMemberAdvanced():
         leng = sqrt(sum(square(self._nodea.vect_2pint(self._nodeb))))
         if cnv: return leng / 1e0
         else: return leng
+    def unitvect_na(self) -> ndarray:  # unit vector
+        return self._nodeb.unitvect_2pint(self._nodea)
+    def unitvect_nb(self) -> ndarray:  # unit vector
+        return self._nodea.unitvect_2pint(self._nodeb)
     def unitvect(self) -> ndarray:  # unit vector
-        return append(
-            self._nodeb.unitvect_2pint(self._nodea),
-            self._nodea.unitvect_2pint(self._nodeb) )
+        return append(self.unitvect_na(),self.unitvect_nb())
     def locn(self) -> ndarray:  # list of location numbers
         return append(self._nodea.locn(), self._nodeb.locn())
 
@@ -92,33 +95,42 @@ class GMTrussMemberAdvanced():
             * self.__yong * self.__area / leng )
         return stif
     def calc_strt(self) -> None:  # calculating stretch
-        self.__delt = dott(
-            self.unitvect(), append(self._nodea._disp.xxyy(),self._nodeb._disp.xxyy()))
+        unitvect = self.unitvect()
+        self.__delt = (
+            + dott(self.unitvect_na(), self._nodea._disp.xxyy(False))
+            + dott(self.unitvect_nb(), self._nodeb._disp.xxyy(False)) )
         self.__epsl = self.__delt / self.leng(False)
         self.__sigm = self.__epsl * self.__yong
         self.__axfc = self.__sigm * self.__area
+        self._nodea._rafc.add(self.unitvect_na() * self.__axfc)
+        self._nodeb._rafc.add(self.unitvect_nb() * self.__axfc)
 
 # =============================================================================
 # =============================================================================
 if __name__ == '__main__':
     # -----------------------------------------------------------------------------
     print("\n## --- section_ma: creating class instances ---")
-    node_a = GMTrussNodeAdvanced(post=(0., 0.), fixc=(True, True), locn=(0, 1))
-    node_b = GMTrussNodeAdvanced(post=(0., 1.), fixc=(False, False), locn=(2, 3))
-    node_c = GMTrussNodeAdvanced(post=(1., 0.), fixc=(True, True), locn=(4, 5))
+    node_a = GMTrussNodeAdvanced(xxyy=(0., 0.), fixc=(True, True), locn=(0, 1))
+    node_b = GMTrussNodeAdvanced(xxyy=(0., 1.), fixc=(False, False), locn=(2, 3))
+    node_c = GMTrussNodeAdvanced(xxyy=(1., 0.), fixc=(True, True), locn=(4, 5))
+
     memb_a = GMTrussMemberAdvanced(nodea=node_a, nodeb=node_b)
     memb_b = GMTrussMemberAdvanced(nodea=node_b, nodeb=node_c)
-    memb_a.prtcls('memb_a -> ')
-    memb_b.prtcls('memb_b -> ')
 
     # -----------------------------------------------------------------------------
-    print("\n## --- section_ma: creating class instances ---")
+    print("\n## --- section_mb: calculating truss member ---")
+    node_b._disp.set_vector(xxyy=(1., 0.))
     print(f'{memb_a.unitvect() = }')
     print(f'{memb_a.locn() = }')
     print(f'{memb_a.buld_stif() = }')
+    memb_a.calc_strt()
     print(f'{memb_b.unitvect() = }')
     print(f'{memb_b.locn() = }')
     print(f'{memb_b.buld_stif() = }')
+    memb_b.calc_strt()
+    memb_a.prtcls('memb_a -> ')
+    print()
+    memb_b.prtcls('memb_b -> ')
 
     # =============================================================================
     # terminal log / terminal log / terminal log /
@@ -147,17 +159,15 @@ if __name__ == '__main__':
     ## --- section_d: (GMVector) string function for print() ---
     ## --- section_e: (GMVector) operating vectors ---
     ## --- section_f: (GMVector) calculating vector ---
-
     ## --- section_a: (GMPoint) declaring class ---
     ## --- section_b: (GMPoint) initializing class instance ---
-    ## --- section_c: (GMPoint) string function for print() ---
-    ## --- section_d: (GMPoint) calculating point ---
-
+    ## --- section_c: (GMPoint) setting and getting functions ---
+    ## --- section_d: (GMPoint) string function for print() ---
+    ## --- section_e: (GMPoint) calculating point ---
     ## --- section_a: (GMTrussNodeAdvanced) declaring class ---
     ## --- section_b: (GMTrussNodeAdvanced) initializing class instance ---
     ## --- section_c: (GMTrussNodeAdvanced) setting and getting functions ---
     ## --- section_d: (GMTrussNodeAdvanced) string function for print() ---
-
     ## --- section_a: (GMTrussMemberAdvanced) declaring class ---
     ## --- section_b: (GMTrussMemberAdvanced) initializing class instance ---
     ## --- section_c: (GMTrussMemberAdvanced) setting and getting functions ---
@@ -165,50 +175,57 @@ if __name__ == '__main__':
     ## --- section_d: (GMTrussMemberAdvanced) calculating segment ---
     
     ## --- section_ma: creating class instances ---
-    memb_a -> :: GMTrussMemberAdvanced ::
-    area (cm^2) = 10, yong (kN/mm^2) = 205 
-    delt (mm) = 205, epsl (1/1000) = 0, sigm (kN/m^2) = 0, axfc = 0 
-    nodea -> :: GMPrint ::
-      post: GMPoint:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1
-      fixc: ndarray:[ True  True] 
-      locn: ndarray:[0 1] 
-      disp: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 0.001
-      exfc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
-    nodeb -> :: GMPrint ::
-      post: GMPoint:: (xx,yy) = (0, 1) : (rr,th) = (1, 90) : unt = 1
-      fixc: ndarray:[False False] 
-      locn: ndarray:[2 3] 
-      disp: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 0.001
-      exfc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
-    memb_b -> :: GMTrussMemberAdvanced ::
-    area (cm^2) = 10, yong (kN/mm^2) = 205 
-    delt (mm) = 205, epsl (1/1000) = 0, sigm (kN/m^2) = 0, axfc = 0 
-    nodea -> :: GMPrint ::
-      post: GMPoint:: (xx,yy) = (0, 1) : (rr,th) = (1, 90) : unt = 1
-      fixc: ndarray:[False False] 
-      locn: ndarray:[2 3] 
-      disp: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 0.001
-      exfc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
-    nodeb -> :: GMPrint ::
-      post: GMPoint:: (xx,yy) = (1, 0) : (rr,th) = (1, 0) : unt = 1
-      fixc: ndarray:[ True  True] 
-      locn: ndarray:[4 5] 
-      disp: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 0.001
-      exfc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
     
-    ## --- section_ma: creating class instances ---
+    ## --- section_mb: calculating truss member ---
     memb_a.unitvect() = array([ 0., -1.,  0.,  1.])
     memb_a.locn() = array([0, 1, 2, 3])
-    memb_a.buld_stif() = array([
-           [ 0.00e+00,  0.00e+00,  0.00e+00,  0.00e+00],
+    memb_a.buld_stif() = array([[ 0.00e+00,  0.00e+00,  0.00e+00,  0.00e+00],
            [ 0.00e+00,  2.05e+08,  0.00e+00, -2.05e+08],
            [ 0.00e+00,  0.00e+00,  0.00e+00,  0.00e+00],
            [ 0.00e+00, -2.05e+08,  0.00e+00,  2.05e+08]])
     memb_b.unitvect() = array([-0.70710678,  0.70710678,  0.70710678, -0.70710678])
     memb_b.locn() = array([2, 3, 4, 5])
-    memb_b.buld_stif() = array([
-           [ 72478445.0716211, -72478445.0716211, -72478445.0716211, 72478445.0716211],
-           [-72478445.0716211,  72478445.0716211,  72478445.0716211, -72478445.0716211],
-           [-72478445.0716211,  72478445.0716211,  72478445.0716211, -72478445.0716211],
-           [ 72478445.0716211, -72478445.0716211, -72478445.0716211, 72478445.0716211]])
+    memb_b.buld_stif() = array([[ 72478445.0716211, -72478445.0716211, -72478445.0716211,
+             72478445.0716211],
+           [-72478445.0716211,  72478445.0716211,  72478445.0716211,
+            -72478445.0716211],
+           [-72478445.0716211,  72478445.0716211,  72478445.0716211,
+            -72478445.0716211],
+           [ 72478445.0716211, -72478445.0716211, -72478445.0716211,
+             72478445.0716211]])
+    memb_a -> :: GMTrussMemberAdvanced ::
+    area (cm^2) = 10, yong (kN/mm^2) = 205 
+    delt (mm) = 0, epsl (1/1000) = 0, sigm (kN/m^2) = 0, axfc(kN) = 0 
+    nodea -> :: GMTrussNodeAdvanced ::
+      (super) GMPoint:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1
+      fixc: ndarray:[ True  True] 
+      locn: ndarray:[0 1]
+      disp: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 0.001
+      exfc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
+      rafc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
+    nodeb -> :: GMTrussNodeAdvanced ::
+      (super) GMPoint:: (xx,yy) = (0, 1) : (rr,th) = (1, 90) : unt = 1
+      fixc: ndarray:[False False] 
+      locn: ndarray:[2 3]
+      disp: GMVector:: (xx,yy) = (1, 0) : (rr,th) = (1, 0) : unt = 0.001
+      exfc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
+      rafc: GMVector:: (xx,yy) = (72.4784, -72.4784) : (rr,th) = (102.5, -45) : unt = 1000
+    
+    memb_b -> :: GMTrussMemberAdvanced ::
+    area (cm^2) = 10, yong (kN/mm^2) = 205 
+    delt (mm) = -0.707107, epsl (1/1000) = -0.5, sigm (kN/m^2) = -102500, axfc(kN) = -102.5 
+    nodea -> :: GMTrussNodeAdvanced ::
+      (super) GMPoint:: (xx,yy) = (0, 1) : (rr,th) = (1, 90) : unt = 1
+      fixc: ndarray:[False False] 
+      locn: ndarray:[2 3]
+      disp: GMVector:: (xx,yy) = (1, 0) : (rr,th) = (1, 0) : unt = 0.001
+      exfc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
+      rafc: GMVector:: (xx,yy) = (72.4784, -72.4784) : (rr,th) = (102.5, -45) : unt = 1000
+    nodeb -> :: GMTrussNodeAdvanced ::
+      (super) GMPoint:: (xx,yy) = (1, 0) : (rr,th) = (1, 0) : unt = 1
+      fixc: ndarray:[ True  True] 
+      locn: ndarray:[4 5]
+      disp: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 0.001
+      exfc: GMVector:: (xx,yy) = (0, 0) : (rr,th) = (0, 0) : unt = 1000
+      rafc: GMVector:: (xx,yy) = (-72.4784, 72.4784) : (rr,th) = (102.5, 135) : unt = 1000
     '''

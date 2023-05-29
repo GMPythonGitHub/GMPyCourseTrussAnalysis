@@ -22,17 +22,24 @@ class GMPoint(GMVector):  # inheriting GMVector
         else:
             super().__init__(xxyy, rrth, unt=unt, cnv=cnv)  # calling supper class initialization
 
+    print("## --- section_c: (GMPoint) setting and getting functions ---")
+    ## setting functions
+    def set_point(self,
+            xxyy: tuple = None, rrth: tuple = None,
+            unt: float = None, cnv: bool = True) -> None:
+        self.set_vector(xxyy=xxyy, rrth=rrth, unt=unt, cnv=cnv)
+
     # -----------------------------------------------------------------------------
-    print("## --- section_c: (GMPoint) string function for print() ---")
+    print("## --- section_d: (GMPoint) string function for print() ---")
     def __str__(self) -> str:
         return super().__str__()
     def prtcls(self, idx: str = '') -> None:
         print(
-            idx + ':: GMPrint ::\n'
-            + '  (sup) GMVector', self.__str__() )
+            idx + ':: GMPoint ::\n'
+            + '  (super) GMVector', self.__str__() )
 
     # -----------------------------------------------------------------------------
-    print("## --- section_d: (GMPoint) calculating point ---")
+    print("## --- section_e: (GMPoint) calculating point ---")
     def vect_2pint(self, pint: object, cnv: bool = True) -> ndarray:
         return pint.xxyy(cnv) - self.xxyy(cnv)
     def dist_2pint(self, pint: object, cnv: bool = True) -> float:
@@ -51,6 +58,7 @@ if __name__ == '__main__':
     pinta = GMPoint(xxyy=(1., 2.), unt=10.); pinta.prtcls('pinta -> ')
     pintb = GMPoint(xxyy=(2., 1.), unt=10.); pintb.prtcls('pintb -> ')
     pintc = GMPoint(pintb); pintc.prtcls('pintc -> ')
+    pintc.set_point(rrth=(1,45), unt=10); pintc.prtcls('pintc -> ')
 
     # -----------------------------------------------------------------------------
     print("\n## --- section_mb: calculating unit distance and unit vector ---")
@@ -89,11 +97,13 @@ if __name__ == '__main__':
     
     ## --- section_ma: creating class instances ---
     pinta -> :: GMPrint ::
-      (sup) GMVector : (xx,yy) = (1, 1) : (rr,th) = (1.41421, 45)
+      (super) GMVector : (xx,yy) = (1, 1) : (rr,th) = (1.41421, 45)
     pintb -> :: GMPrint ::
-      (sup) GMVector : (xx,yy) = (1, 2) : (rr,th) = (2.23607, 63.4349)
+      (super) GMVector : (xx,yy) = (1, 2) : (rr,th) = (2.23607, 63.4349)
     pintc -> :: GMPrint ::
-      (sup) GMVector : (xx,yy) = (1, 2) : (rr,th) = (2.23607, 63.4349)
+      (super) GMVector : (xx,yy) = (1, 2) : (rr,th) = (2.23607, 63.4349)
+    pintc -> :: GMPrint ::
+      (super) GMVector : (xx,yy) = (0.707107, 0.707107) : (rr,th) = (1, 45) : unt = 10
     
     ## --- section_mb: operating points ---
     (pinta + pintb).xxyy() = array([2., 3.])

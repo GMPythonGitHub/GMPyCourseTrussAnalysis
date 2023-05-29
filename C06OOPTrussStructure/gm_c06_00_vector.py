@@ -135,6 +135,7 @@ if __name__ == '__main__':
     vectb = GMVector(xxyy=(3., 4.), unt=10.); vectb.prtcls('vectb -> ')
     vectbc = GMVector(vectb); vectbc.prtcls('vectbc -> ')
     vectc = GMVector(xxyy=(1.,2.)); vectc.prtcls('vectc -> ')
+    vectc.set_vector(rrth=(1,45), unt=10); vectc.prtcls('vectc -> ')
 
     # -----------------------------------------------------------------------------
     print("\n## --- section_mb: calculating unit vector and product ---")
@@ -166,6 +167,8 @@ if __name__ == '__main__':
     : (xx,yy) = (3, 4) : (rr,th) = (5, 53.1301)
     vectc -> :: GMVector ::
     : (xx,yy) = (3, 4) : (rr,th) = (5, 53.1301)
+    vectc -> :: GMVector ::
+    : (xx,yy) = (0.707107, 0.707107) : (rr,th) = (1, 45) : unt = 10
     
     ## --- section_mb: operating vectors ---
     vecta + vectb -> :: GMVector ::
