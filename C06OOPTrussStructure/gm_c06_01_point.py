@@ -17,10 +17,7 @@ class GMPoint(GMVector):  # inheriting GMVector
     def __init__(self,
             xxyy: tuple = (1., 1.), rrth: tuple = None,
             unt: float = 1., cnv: bool = True):
-        if isinstance (xxyy, (GMVector, GMPoint)):
-            super().__init__(xxyy=xxyy.xxyy(False), rrth=None, unt=xxyy.unt(), cnv=False)
-        else:
-            super().__init__(xxyy, rrth, unt=unt, cnv=cnv)  # calling supper class initialization
+        super().__init__(xxyy, rrth, unt=unt, cnv=cnv)  # calling supper class initialization
 
     print("## --- section_c: (GMPoint) setting and getting functions ---")
     ## setting functions

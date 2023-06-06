@@ -28,16 +28,16 @@ class GMTrussStructureAdvanced():
     ## setting functions
     def set_truss_structure(self, nodes: list, membs: list) -> None:
         self._nodes, self._membs = nodes, membs
-        self.__nnode, self.__nmemb = len(self._nodes), len(self._membs)
-        self.__dfrd = self.__nnode * len(self._nodes[0].xxyy())
+        self.__numnode, self.__nummemb = len(self._nodes), len(self._membs)
+        self.__dfrd = self.__numnode * len(self._nodes[0].xxyy())
         self._fixc = full((self.__dfrd,), False)
         self._disp, self._exfc = zers((self.__dfrd,)), zers((self.__dfrd,))
         self._stif = zers((self.__dfrd, self.__dfrd,))
         #  mtxeq = GMMtxEq(nrow=self.__dfrd, ncol=self.__dfrd)
 
     ## getting functions
-    def nnode(self) -> int: return self.__nnode
-    def nmemb(self) -> int: return self.__nmemb
+    def numnode(self) -> int: return self.__numnode
+    def nummemb(self) -> int: return self.__nummemb
     def dfrd(self) -> int: 
         return self.__dfrd
 
@@ -45,7 +45,8 @@ class GMTrussStructureAdvanced():
     print("## --- section_d: (GMTrussStructureAdvanced) string function ---")
     def __str__(self):
         st  = (
-            f'nnode = {self.nnode():d}, nmemb = {self.nmemb():d}, dfrd = {self.dfrd():d} ' )
+            f'numnode = {self.numnode():d}, nummemb = {self.nummemb():d}, '
+            f'dfrd = {self.dfrd():d} ' )
         return st
     def prtcls(self, idx: str = '') -> None:
         print(idx + ':: GMTrussStructureAdvanced ::')

@@ -67,6 +67,8 @@ class GMVectorD():
     def __mod__(self, vect): return GMVectorD(xxyy=self.__xxyy%self.cnv2vect(vect))
     def __rmod__(self, vect): return GMVectorD(xxyy=self.cnv2vect(vect)%self.__xxyy)
 
+    
+
     # -----------------------------------------------------------------------------
     print('## --- section_a6: (GMVectorD) calculating unit vector and products ---')
     def uvect(self) -> ndarray:
