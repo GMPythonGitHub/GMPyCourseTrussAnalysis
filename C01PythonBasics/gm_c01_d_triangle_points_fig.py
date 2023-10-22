@@ -9,56 +9,53 @@ from numpy import (sqrt, sin, arccos, rad2deg)
 
 # -----------------------------------------------------------------------------
 print('\n## --- section_a: setting three points ---')
-pnta, pntb, pntc = (0,0), (2,0), (0,2)  # using 'tuple'
-print(f'Points: pnta, pntb, pntc = {pnta}, {pntb}, {pntc}')
+point_aa, point_bb, point_cc = (0,0), (2,0), (1,2)  # using 'tuple'
+print(f'Points: point_aa, point_bb, point_cc = {point_aa}, {point_bb}, {point_cc}')
 
 # -----------------------------------------------------------------------------
-print("\n## --- section_b: calculating sides ---")
-''' finding sides using Pythagoras' theorem '''
-sdea = sqrt((pntc[0]-pntb[0])**2 + (pntc[1]-pntb[1])**2)
-sdeb = sqrt((pnta[0]-pntc[0])**2 + (pnta[1]-pntc[1])**2)
-sdec = sqrt((pntb[0]-pnta[0])**2 + (pntb[1]-pnta[1])**2)
-print(f'Side length: a, b, c = {sdea:g}, {sdeb:g}, {sdec:g}')
+print("\n## --- section_b: calculating sides using Pythagoras' theorem ---")
+side_aa = sqrt((point_cc[0]-point_bb[0])**2 + (point_cc[1]-point_bb[1])**2)
+side_bb = sqrt((point_aa[0]-point_cc[0])**2 + (point_aa[1]-point_cc[1])**2)
+side_cc = sqrt((point_bb[0]-point_aa[0])**2 + (point_bb[1]-point_aa[1])**2)
+print(f'Side length: a, b, c = {side_aa:g}, {side_bb:g}, {side_cc:g}')
 
 # -----------------------------------------------------------------------------
-print("\n## --- section_c: calculating angles ---")
-''' finding angles using cosine formula '''
-anga = arccos((sdeb*sdeb + sdec*sdec - sdea*sdea) / (2*sdeb*sdec))
-angb = arccos((sdec*sdec + sdea*sdea - sdeb*sdeb) / (2*sdec*sdea))
-angc = arccos((sdea*sdea + sdeb*sdeb - sdec*sdec) / (2*sdea*sdeb))
-print(f'Angles: A, B, C = {rad2deg(anga):g}, {rad2deg(angb):g}, {rad2deg(angc):g} (deg)')
+print("\n## --- section_c: calculating angles using cosine formula ---")
+angle_aa = arccos((side_bb**2 + side_cc**2 - side_aa**2) / (2*side_bb*side_cc))
+angle_bb = arccos((side_cc**2 + side_aa**2 - side_bb**2) / (2*side_cc*side_aa))
+angle_cc = arccos((side_aa**2 + side_bb**2 - side_cc**2) / (2*side_aa*side_bb))
+print(f'Angle: A, B, C = {rad2deg(angle_aa):g}, {rad2deg(angle_bb):g}, {rad2deg(angle_cc):g} (deg)')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_d: calculating area using Heron's formula ---")
-ss = (sdea + sdeb + sdec) / 2
-area = sqrt(ss * (ss-sdea) * (ss-sdeb) * (ss-sdec))
-print(f'Area: S = {area:g}')
+sss = (side_aa + side_bb + side_cc) / 2
+area = sqrt(sss * (sss-side_aa) * (sss-side_bb) * (sss-side_cc))
+print(f'Area = {area:g}')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_e: calculating gravity center ---")
-pntg = [
-    (pnta[0] + pntb[0] + pntc[0]) / 3,
-    (pnta[1] + pntb[1] + pntc[1]) / 3 ]
-print(f'gravity center: (pgx,pgy) = ({pntg[0]:g}, {pntg[1]:g})')
+point_gg = (
+    (point_aa[0] + point_bb[0] + point_cc[0]) / 3,
+    (point_aa[1] + point_bb[1] + point_cc[1]) / 3 )
+print(f'gravity center: (xx,yy) = ({point_gg[0]:g}, {point_gg[1]:g})')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_f: calculating inscribed circle ---")
-ii = (sdea + sdeb + sdec)
-rri = 2 * area / ii
-pnti = (
-    (sdea*pnta[0] + sdeb*pntb[0] + sdec*pntc[0]) / ii,
-    (sdea*pnta[1] + sdeb*pntb[1] + sdec*pntc[1]) / ii )
-print(f'Radius: ri = {rri:g},   Inner center: (pix,piy) = ({pnti[0]:g}, {pnti[1]:g})')
+iii = (side_aa + side_bb + side_cc)
+radius_ii = 2 * area / iii
+point_ii = (
+    (side_aa*point_aa[0] + side_bb*point_bb[0] + side_cc*point_cc[0]) / iii,
+    (side_aa*point_aa[1] + side_bb*point_bb[1] + side_cc*point_cc[1]) / iii )
+print(f'radius = {radius_ii:g},   Inner center: (xx,yy) = ({point_ii[0]:g}, {point_ii[1]:g})')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_g: calculating circumscribed circle ---")
-''' finding center and radius '''
-oo = sin(2*anga) + sin(2*angb) + sin(2*angc)
-rro = sdea / sin(anga) / 2
-pnto = (
-    (sin(2*anga)*pnta[0] + sin(2*angb)*pntb[0] + sin(2*angc)*pntc[0]) / oo,
-    (sin(2*anga)*pnta[1] + sin(2*angb)*pntb[1] + sin(2*angc)*pntc[1]) / oo )
-print(f'Radius: ro = {rro:g},   Outer center: (pox,poy) = ({pnto[0]:g}, {pnto[1]:g})')
+ooo = sin(2*angle_aa) + sin(2*angle_bb) + sin(2*angle_cc)
+radius_oo = side_aa / sin(angle_aa) / 2
+point_oo = (
+    (sin(2*angle_aa)*point_aa[0] + sin(2*angle_bb)*point_bb[0] + sin(2*angle_cc)*point_cc[0]) / ooo,
+    (sin(2*angle_aa)*point_aa[1] + sin(2*angle_bb)*point_bb[1] + sin(2*angle_cc)*point_cc[1]) / ooo )
+print(f'radius = {radius_oo:g},   Outer center: (xx,yy) = ({point_oo[0]:g}, {point_oo[1]:g})')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_h: drawing triangle and circles ---")
@@ -67,26 +64,30 @@ from matplotlib import (pyplot as plt, patches as pat)
 
 fig, ax = plt.subplots(figsize=(6., 6.))
 fig.suptitle('triangle and circles')
-ax.plot((pnta[0],pntb[0],pntc[0],pnta[0]), (pnta[1],pntb[1],pntc[1],pnta[1]),
+ax.plot(
+    (point_aa[0], point_bb[0], point_cc[0], point_aa[0]),
+    (point_aa[1], point_bb[1], point_cc[1], point_aa[1]),
     linestyle='-', linewidth=2, color='C0')
-ax.scatter((pnta[0],pntb[0],pntc[0]), (pnta[1],pntb[1],pntc[1]),
+ax.scatter(
+    (point_aa[0], point_bb[0], point_cc[0]),
+    (point_aa[1], point_bb[1], point_cc[1]),
     marker='o', s=40, color='C0', edgecolor='C0')
 
-ax.scatter(pntg[0], pntg[1],
+ax.scatter(point_gg[0], point_gg[1],
     marker='o', s=40, color='C1', edgecolor='C1',
     label='gravity center')
 
-ptc = pat.Circle(xy=pnti, radius=rri,
+ptc = pat.Circle(xy=point_ii, radius=radius_ii,
     linestyle='--', linewidth=2., edgecolor='C2', fill=False)
 ax.add_patch(ptc)
-ax.scatter(pnti[0], pnti[1],
+ax.scatter(point_ii[0], point_ii[1],
     marker='o', s=40, color='C2', edgecolor='C2',
     label='inscribed circle')
 
-ptc = pat.Circle(xy=pnto, radius=rro,
+ptc = pat.Circle(xy=point_oo, radius=radius_oo,
     linestyle='--', linewidth=2., edgecolor='C3', fill=False)
 ax.add_patch(ptc)
-ax.scatter(pnto[0], pnto[1],
+ax.scatter(point_oo[0], point_oo[1],
     marker='o', s=40, color='C3', edgecolor='C3',
     label='circumscribed circle')
 
@@ -103,19 +104,19 @@ plt.show()
 # -----------------------------------------------------------------------------
 ## --- section__: importing items from module ---
 ## --- section_a: setting three points ---
-Points: pnta, pntb, pntc = (0, 0), (2, 0), (0, 2)
-## --- section_b: calculating sides ---
-Side length: a, b, c = 2.82843, 2, 2
-## --- section_c: calculating angles ---
-Angles: A, B, C = 90, 45, 45 (deg)
+Points: point_aa, point_bb, point_cc = (0, 0), (2, 0), (1, 2)
+## --- section_b: calculating sides using Pythagoras' theorem ---
+Side length: a, b, c = 2.23607, 2.23607, 2
+## --- section_c: calculating angles using cosine formula ---
+Angle: A, B, C = 63.4349, 63.4349, 53.1301 (deg)
 ## --- section_d: calculating area using Heron's formula ---
-Area: S = 2
+Area = 2
 ## --- section_e: calculating gravity center ---
-gravity center: (pgx,pgy) = (0.666667, 0.666667)
+gravity center: (xx,yy) = (1, 0.666667)
 ## --- section_f: calculating inscribed circle ---
-Radius: ri = 0.585786,   Inner center: (pix,piy) = (0.585786, 0.585786)
+radius = 0.618034,   Inner center: (xx,yy) = (1, 0.618034)
 ## --- section_g: calculating circumscribed circle ---
-Radius: ro = 1.41421,   Outer center: (pox,poy) = (1, 1)
+radius = 1.25,   Outer center: (xx,yy) = (1, 0.75)
 ## --- section_h: drawing triangle and circles ---
 '''
 

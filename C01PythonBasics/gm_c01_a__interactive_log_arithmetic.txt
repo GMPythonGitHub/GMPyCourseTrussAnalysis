@@ -1,4 +1,4 @@
-## gm_c01_a__interlog_arithmetic.txt: prepared by Kinya MIURA 230410
+## gm_c01_a__interactive_log_arithmetic.txt: prepared by Kinya MIURA 230410
 # -----------------------------------------------------------------------------
 *** interactive log of arithmetic operations and Python basics ***
 # -----------------------------------------------------------------------------
@@ -16,33 +16,33 @@
 
 # -----------------------------------------------------------------------------
 ## --- section_b: operating arithmetic calculations with variables ---
->>> a, b = 3, 2
->>> a, b
+>>> aa, bb = 3, 2
+>>> aa, bb
 (3, 2)
->>> smm, sub, mul, div = a + b, a - b, a * b, a / b  # four variables
+>>> smm, sub, mul, div = aa + ba, aa - bb, aa * bb, aa / bb  # four variables
 >>> smm, sub, mul, div
 (5, 1, 6, 1.5)
 >>> (smm + sub) / 2, (smm - sub) / 2
 (3.0, 2.0)
->>> result = a + b, a - b, a * b, a / b  # variable as 'tuple'
+>>> result = aa + bb, aa - bb, aa * bb, aa / bb  # variable as 'tuple'
 >>> result
 (5, 1, 6, 1.5)
 >>> (result[0] + result[1]) / 2, (result[0] - result[1]) / 2
 (3.0, 2.0)
 
 # -----------------------------------------------------------------------------
-## --- section_c: using 'function' ---
->>> def func(n):  # number, square and cubic as 'tuple'
-...     sqr, cub = n*n, n*n*n  # calculating square and cube
-...     return n, sqr, cub  # returning three varues
+## --- section_c: introducing 'function' ---
+>>> def func(nn):  # returning 'tuple' including number, square and cubic
+...     sqr, cub = nn * nn, nn * nn * nn  # calculating square and cube
+...     return nn, sqr, cub  # returning three varues
 ...               # empty line is needed
 >>> func(5)
 (5, 25, 125)
 
 # -----------------------------------------------------------------------------
-## --- section_d: using 'for-loop' ---
->>> for i in range(5):  # i = 0 -> (5-1)
-...     print(func(i))  # printing results
+## --- section_d: introducing 'for-loop' ---
+>>> for nn in range(5):  # nn = 0 -> (5-1)
+...     print(func(nn))  # printing results
 ...             # empty line is needed
 0 0 0  # results of calculation
 1 1 1

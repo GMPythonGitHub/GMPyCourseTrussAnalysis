@@ -9,34 +9,34 @@ from numpy import (sqrt)
 
 # -----------------------------------------------------------------------------
 print('\n## --- section_a: setting points ---')
-pnts = ((2, 1), (3, 2), (2, 3), (1, 2))  # using 'tuple' of two dimension
-print(f'Points: pnts = {pnts}')
+points = ((2, 1), (3, 2), (2, 3), (1, 2))  # using 'tuple' of two dimension
+print(f'Points: points = {points}')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_b: calculating sides using Pythagoras' theorem ---")
-sdes = []
-for i in range(len(pnts)):
-    sde = sqrt((pnts[i][0]-pnts[i-1][0])**2 + (pnts[i][1]-pnts[i-1][1])**2)
-    sdes.append(sde)
-print(f'Side length: sdes = {sdes}')
-print(f'Circumference: ss = {sum(sdes):g}')
+sides = []
+for i in range(len(points)):
+    side = sqrt((points[i][0]-points[i-1][0])**2 + (points[i][1]-points[i-1][1])**2)
+    sides.append(side)
+print(f'Side length: sides = {sides}')
+print(f'Circumference: ss = {sum(sides):g}')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_c: calculating total area enclosed: projection ---")
 area, prj = 0, []
-for i in range(len(pnts)):
-    prj.append((pnts[i][1]+pnts[i-1][1]) * (pnts[i][0]-pnts[i-1][0]) / 2)
+for i in range(len(points)):
+    prj.append((points[i][1]+points[i-1][1]) * (points[i][0]-points[i-1][0]) / 2)
     area += prj[-1]
 print(f'Area: area = {abs(area):g}')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_d: calculating gravity center ---")
 ''' finding gravity center '''
-pntgx, pntgy = 0, 0
-for (i, pnt) in enumerate(pnts):
-    pntgx += pnt[0]; pntgy += pnt[1]
-pntgx /= len(pnts); pntgy /= len(pnts)
-print(f'Gravity center: (pgx,pgy) = ({pntgx:g}, {pntgy:g})')
+pointgx, pointgy = 0, 0
+for (i, point) in enumerate(points):
+    pointgx += point[0]; pointgy += point[1]
+pointgx /= len(points); pointgy /= len(points)
+print(f'Gravity center: (pgx,pgy) = ({pointgx:g}, {pointgy:g})')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_e: drawing polygon ---")
@@ -44,25 +44,27 @@ from matplotlib import (pyplot as plt, patches as pat)
 
 fig, ax = plt.subplots(figsize=(6., 6.))
 fig.suptitle('polygon and gravity center')
-pntsx, pntsy = [], []
-for ipnts in pnts:
-    pntsx.append(ipnts[0]); pntsy.append(ipnts[1])
+point_ss_xx, point_ss_yy = [], []
+for ipoints in points:
+    point_ss_xx.append(ipoints[0]); point_ss_yy.append(ipoints[1])
 
-for i in range(len(pnts)):
+for i in range(len(points)):
     if prj[i] >= 0: clr = 'C1'
     else: clr = 'C2'
-    xy = ((pntsx[i-1],0), (pntsx[i],0), (pntsx[i],pntsy[i]), (pntsx[i-1],pntsy[i-1]))
+    xy = (
+        (point_ss_xx[i-1],0), (point_ss_xx[i],0),
+        (point_ss_xx[i],point_ss_yy[i]), (point_ss_xx[i-1],point_ss_yy[i-1]) )
     ptc = pat.Polygon(xy=xy, closed=True,
         linestyle='-', linewidth=1., edgecolor=clr, fill=True, facecolor=clr, alpha=0.2)
     ax.add_patch(ptc)
 
-ax.scatter(pntsx, pntsy,
+ax.scatter(point_ss_xx, point_ss_yy,
     marker='o', s=40, color='C0', edgecolor='C0')
-pntsx.append(pnts[0][0]); pntsy.append(pnts[0][1])
-ax.plot(tuple(pntsx), tuple(pntsy),
+point_ss_xx.append(points[0][0]); point_ss_yy.append(points[0][1])
+ax.plot(tuple(point_ss_xx), tuple(point_ss_yy),
     linestyle='-', linewidth=2, color='C0')
 
-ax.scatter(pntgx, pntgy,
+ax.scatter(pointgx, pointgy,
     marker='o', s=40, color='C1', edgecolor='C1', label='gravity center')
 
 ax.set_aspect('equal')
@@ -77,9 +79,9 @@ plt.show()
 # -----------------------------------------------------------------------------
 ## --- section__: importing item from module ---
 ## --- section_a: setting points ---
-Points: pnts = ((2, 1), (3, 2), (2, 3), (1, 2))
+Points: points = ((2, 1), (3, 2), (2, 3), (1, 2))
 ## --- section_b: calculating sides using Pythagoras' theorem ---
-Side length: sdes = [1.4142135623730951, 1.4142135623730951, 1.4142135623730951, 1.4142135623730951]
+Side length: sides = [1.4142135623730951, 1.4142135623730951, 1.4142135623730951, 1.4142135623730951]
 Circumference: ss = 5.65685
 ## --- section_c: calculating total area enclosed: projection ---
 Area: area = 2

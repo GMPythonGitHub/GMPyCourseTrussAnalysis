@@ -9,33 +9,33 @@ from numpy import (sqrt)
 
 # -----------------------------------------------------------------------------
 print('\n## --- section_a: setting points ---')
-pnts = ((2,1), (3,2), (2,3), (1,2))  # using 'tuple' of two dimension
-print(f'Points: pnts = {pnts}')
+points = ((2,1), (3,2), (2,3), (1,2))  # using 'tuple' of two dimension
+print(f'Points: points = {points}')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_b: calculating sides ---")
-sdes = []
-for i in range(len(pnts)):
-    sde = sqrt((pnts[i][0]-pnts[i-1][0])**2 + (pnts[i][1]-pnts[i-1][1])**2)
-    sdes.append(sde)
-print(f'Side length: sdes = {sdes}')
-print(f'Circumference: ss = {sum(sdes):g}')
+sides = []
+for i in range(len(points)):
+    side = sqrt((points[i][0]-points[i-1][0])**2 + (points[i][1]-points[i-1][1])**2)
+    sides.append(side)
+print(f'Side length: sides = {sides}')
+print(f'Circumference: ss = {sum(sides):g}')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_c: calculating area ---")
 area, prd = 0, []
-for i in range(len(pnts)):
-    prd.append((pnts[i-1][0]*pnts[i][1] - pnts[i-1][1]*pnts[i][0]) / 2)
+for i in range(len(points)):
+    prd.append((points[i-1][0]*points[i][1] - points[i-1][1]*points[i][0]) / 2)
     area += prd[-1]
 print(f'Area: area = {abs(area):g}')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_d: calculating gravity center ---")
-pntgx, pntgy = 0, 0
-for (i, pnt) in enumerate(pnts):
-    pntgx += pnt[0]; pntgy += pnt[1]
-pntgx /= len(pnts); pntgy /= len(pnts)
-print(f'Gravity center: (pgx,pgy) = ({pntgx:g}, {pntgy:g})')
+point_gg_xx, point_gg_yy = 0, 0
+for (i, point) in enumerate(points):
+    point_gg_xx += point[0]; point_gg_yy += point[1]
+point_gg_xx /= len(points); point_gg_yy /= len(points)
+print(f'Gravity center: (xx,yy) = ({point_gg_xx:g}, {point_gg_yy:g})')
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_e: drawing polygon ---")
@@ -43,25 +43,25 @@ from matplotlib import (pyplot as plt, patches as pat)
 
 fig, ax = plt.subplots(figsize=(6., 6.))
 fig.suptitle('polygon and gravity center')
-pntsx, pntsy = [], []
-for ipnts in pnts:
-    pntsx.append(ipnts[0]); pntsy.append(ipnts[1])
+points_xx, points_yy = [], []
+for ipoints in points:
+    points_xx.append(ipoints[0]); points_yy.append(ipoints[1])
 
-for i in range(len(pnts)):
+for i in range(len(points)):
     if prd[i] >= 0: clr = 'C1'
     else: clr = 'C2'
-    xy = ((0,0),(pntsx[i],pntsy[i]),(pntsx[i-1],pntsy[i-1]))
+    xy = ((0,0),(points_xx[i],points_yy[i]),(points_xx[i-1],points_yy[i-1]))
     ptc = pat.Polygon(xy=xy, closed=True,
         linestyle='-', linewidth=1., edgecolor=clr, fill=True, facecolor=clr, alpha=0.2)
     ax.add_patch(ptc)
 
-ax.scatter(tuple(pntsx), tuple(pntsy),
+ax.scatter(tuple(points_xx), tuple(points_yy),
     marker='o', s=40, color='C0', edgecolor='C0')
-pntsx.append(pnts[0][0]); pntsy.append(pnts[0][1])
-ax.plot(tuple(pntsx), tuple(pntsy),
+points_xx.append(points[0][0]); points_yy.append(points[0][1])
+ax.plot(tuple(points_xx), tuple(points_yy),
     linestyle='-', linewidth=2, color='C0')
 
-ax.scatter(pntgx, pntgy,
+ax.scatter(point_gg_xx, point_gg_yy,
     marker='o', s=40, color='C1', edgecolor='C1', label='gravity center')
 
 ax.set_aspect('equal')
@@ -76,9 +76,9 @@ plt.show()
 # -----------------------------------------------------------------------------
 ## --- section__: importing item from module ---
 ## --- section_a: setting points ---
-Points: pnts = ((2, 1), (3, 2), (2, 3), (1, 2))
+Points: points = ((2, 1), (3, 2), (2, 3), (1, 2))
 ## --- section_b: calculating sides ---
-Side length: sdes = [1.4142135623730951, 1.4142135623730951, 1.4142135623730951, 1.4142135623730951]
+Side length: sides = [1.4142135623730951, 1.4142135623730951, 1.4142135623730951, 1.4142135623730951]
 Circumference: ss = 5.65685
 ## --- section_c: calculating area ---
 Area: area = 2
