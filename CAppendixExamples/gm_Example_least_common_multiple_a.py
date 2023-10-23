@@ -1,24 +1,23 @@
-# gm_Example_Monte_Carlo_c: coded by Kinya MIURA 230414
+# gm_Example_greatest_common_divisor_a: coded by Kinya MIURA 230415
 # -----------------------------------------------------------------------------
-print("\n*** Monde Carlo Method: Buffon's needle ***")
+print('\n*** ------------ ***')
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-import numpy as np
-
-dd, ll = 1, 1
-num, cnt = 10, 0
-for i in range(num):
-    yy, th = np.random.rand() * dd / 2, np.random.rand() * np.pi / 2
-    if ll / 2 * np.sin(th) > yy:
-        cnt += 1
-pai = num / cnt * ll * 2 / dd
-print(f'{pai = }')
+numbera, numberb = 36, 120
+number_mul = numbera * numberb
+for mul in range(1,number_mul):
+    if mul % numbera == 0 and mul % numberb == 0:
+        least_common_multiple = mul
+        break
+print(f'{numbera = }, {numberb = }')
+print(f'{least_common_multiple = }')
 
 # =============================================================================
 # terminal log / terminal log / terminal log /
 '''
-*** Monde Carlo Method: Buffon's needle ***
+*** ------------ ***
 # -----------------------------------------------------------------------------
-pai = 2.5
+numbera = 36, numberb = 120
+least_common_multiple = 360
 '''

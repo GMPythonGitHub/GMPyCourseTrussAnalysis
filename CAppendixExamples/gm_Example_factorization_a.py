@@ -1,24 +1,22 @@
-# gm_Example_Monte_Carlo_c: coded by Kinya MIURA 230414
+# gm_Example_factorization_a: coded by Kinya MIURA 230414
 # -----------------------------------------------------------------------------
-print("\n*** Monde Carlo Method: Buffon's needle ***")
+print('\n*** ------------ ***')
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-import numpy as np
-
-dd, ll = 1, 1
-num, cnt = 10, 0
-for i in range(num):
-    yy, th = np.random.rand() * dd / 2, np.random.rand() * np.pi / 2
-    if ll / 2 * np.sin(th) > yy:
-        cnt += 1
-pai = num / cnt * ll * 2 / dd
-print(f'{pai = }')
+number = 180
+factors = []  # 'list' of factors
+for fac in range(1,number+1):
+    if number % fac == 0:
+        factors.append(fac)
+print(f'{number = }')
+print(f'{factors = }')
 
 # =============================================================================
 # terminal log / terminal log / terminal log /
 '''
-*** Monde Carlo Method: Buffon's needle ***
+*** ------------ ***
 # -----------------------------------------------------------------------------
-pai = 2.5
+number = 180
+factors = [1, 2, 3, 4, 5, 6, 9, 10, 12, 15, 18, 20, 30, 36, 45, 60, 90, 180]
 '''

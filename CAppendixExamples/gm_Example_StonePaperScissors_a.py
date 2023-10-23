@@ -1,15 +1,15 @@
 # gm_Example_Stone_Paper_Scissors_a: coded by Kinya MIURA 230415
 # -----------------------------------------------------------------------------
-print('\n*** ------------ ***')
+print('\n*** Stone Paper Scissors ***')
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
 import random
 
 strg = input('\tType your hand : {S: Stone, P: Paper, C: Scissors}')
-if strg in ['S', 's']:
+if strg in ('S', 's'):
     hand_your = 'Stone'
-elif strg in ['P', 'p']:
+elif strg in ('P', 'p'):
     hand_your = 'Paper'
 else:
     hand_your = 'Scissors'
@@ -32,7 +32,7 @@ elif (
 # =============================================================================
 # terminal log / terminal log / terminal log /
 '''
-*** ------------ ***
+*** Stone Paper Scissors ***
 # -----------------------------------------------------------------------------
 	Type your hand : {S: Stone, P: Paper, C: Scissors}>? p
 Your hand:  Paper
