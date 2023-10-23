@@ -24,7 +24,7 @@ print("\n## --- section_c: calculating angles using cosine formula ---")
 angle_aa = arccos((side_bb**2 + side_cc**2 - side_aa**2) / (2*side_bb*side_cc))
 angle_bb = arccos((side_cc**2 + side_aa**2 - side_bb**2) / (2*side_cc*side_aa))
 angle_cc = arccos((side_aa**2 + side_bb**2 - side_cc**2) / (2*side_aa*side_bb))
-print(f'Angle: A, B, C = {rad2deg(angle_aa):g}, {rad2deg(angle_bb):g}, {rad2deg(angle_cc):g} (deg)')
+print(f'Angle: A, B, C = {rad2deg(angle_aa):g}, {rad2deg(angle_bb):g}, {rad2deg(angle_cc):g} (deg)' )
 
 # -----------------------------------------------------------------------------
 print("\n## --- section_d: calculating area using Heron's formula ---")
@@ -63,18 +63,25 @@ print(f'radius = {radius_oo:g},   Outer center: (xx,yy) = ({point_oo[0]:g}, {poi
 *** calculation of triangle from points ***
 # -----------------------------------------------------------------------------
 ## --- section__: importing items from module ---
+
 ## --- section_a: setting three points ---
 Points: point_aa, point_bb, point_cc = (0, 0), (2, 0), (1, 2)
+
 ## --- section_b: calculating sides using Pythagoras' theorem ---
 Side length: a, b, c = 2.23607, 2.23607, 2
+
 ## --- section_c: calculating angles using cosine formula ---
 Angle: A, B, C = 63.4349, 63.4349, 53.1301 (deg)
+
 ## --- section_d: calculating area using Heron's formula ---
 Area = 2
+
 ## --- section_e: calculating gravity center ---
 gravity center: (xx,yy) = (1, 0.666667)
+
 ## --- section_f: calculating inscribed circle ---
 radius = 0.618034,   Inner center: (xx,yy) = (1, 0.618034)
+
 ## --- section_g: calculating circumscribed circle ---
 radius = 1.25,   Outer center: (xx,yy) = (1, 0.75)
 '''

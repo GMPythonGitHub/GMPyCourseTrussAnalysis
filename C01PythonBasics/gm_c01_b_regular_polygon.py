@@ -18,18 +18,18 @@ print('pi = ', pi, ', sin(pi/2) = ', sin(pi/2), ', cos(pi) = ', cos(pi))
 print('\n## --- section_c: area of n-th regular polygon ---')
 radius = 2  # radius of circumscribed circle
 nn = 3  # number of sides
-theta = 2 * pi / nn  # top angle
-area_tri = (1 /2) * (2 * radius * sin(theta/2)) * (radius * cos(theta/2))  # area of triangle
+theta_nn = 2 * pi / nn  # top angle
+area_tri = (1 /2) * (2 * radius * sin(theta_nn/2)) * (radius * cos(theta_nn/2))  # area of triangle
 area = nn * area_tri  # area of polygon
-print('radius = ', radius, 'nn = ', nn, 'area = ', area)
+print('nn = ', nn, ', \tradius = ', radius, ', \tarea = ', area)
 
 # -----------------------------------------------------------------------------
 print('\n## --- section_d: calculating a series of polygon areas ---')
 for nn in range(3,8):
-    theta = 2 * pi / nn
-    area_tri = radius * sin(theta/2) * radius * cos(theta/2)
+    theta_nn = 2 * pi / nn
+    area_tri = radius * sin(theta_nn/2) * radius * cos(theta_nn/2)
     area = area_tri * nn
-    print('nn = ', nn, ',\tradius = ', radius, ',\tarea = ', area)
+    print('nn = ', nn, ', \tradius = ', radius, ', \tarea = ', area)
 print('circle: area = ', pi * radius * radius)
 
 # =============================================================================
@@ -39,15 +39,18 @@ print('circle: area = ', pi * radius * radius)
 # -----------------------------------------------------------------------------
 ## --- section_a: triangle and square --- ##
 side =  2 , area =  (1.7320508075688772, 4)
+
 ## --- section_b: importing items from standard module math ---
 pi =  3.141592653589793 , sin(pi/2) =  1.0 , cos(pi) =  -1.0
+
 ## --- section_c: area of n-th regular polygon ---
-radius =  2 nn =  3 area =  5.196152422706633
+radius =  2 , 	nn =  3 , 	area =  5.196152422706633
+
 ## --- section_d: calculating a series of polygon areas ---
-nn =  3 ,	radius =  2 ,	area =  5.196152422706633
-nn =  4 ,	radius =  2 ,	area =  8.000000000000002
-nn =  5 ,	radius =  2 ,	area =  9.510565162951536
-nn =  6 ,	radius =  2 ,	area =  10.392304845413264
-nn =  7 ,	radius =  2 ,	area =  10.945640754552418
+nn =  3 , 	radius =  2 , 	area =  5.196152422706633
+nn =  4 , 	radius =  2 , 	area =  8.000000000000002
+nn =  5 , 	radius =  2 , 	area =  9.510565162951536
+nn =  6 , 	radius =  2 , 	area =  10.392304845413264
+nn =  7 , 	radius =  2 , 	area =  10.945640754552418
 circle: area =  12.566370614359172
 '''

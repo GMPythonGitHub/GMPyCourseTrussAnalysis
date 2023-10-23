@@ -103,20 +103,28 @@ plt.show()
 *** calculation of triangle from points: drawing figure ***
 # -----------------------------------------------------------------------------
 ## --- section__: importing items from module ---
+
 ## --- section_a: setting three points ---
 Points: point_aa, point_bb, point_cc = (0, 0), (2, 0), (1, 2)
+
 ## --- section_b: calculating sides using Pythagoras' theorem ---
 Side length: a, b, c = 2.23607, 2.23607, 2
+
 ## --- section_c: calculating angles using cosine formula ---
 Angle: A, B, C = 63.4349, 63.4349, 53.1301 (deg)
+
 ## --- section_d: calculating area using Heron's formula ---
 Area = 2
+
 ## --- section_e: calculating gravity center ---
 gravity center: (xx,yy) = (1, 0.666667)
+
 ## --- section_f: calculating inscribed circle ---
 radius = 0.618034,   Inner center: (xx,yy) = (1, 0.618034)
+
 ## --- section_g: calculating circumscribed circle ---
 radius = 1.25,   Outer center: (xx,yy) = (1, 0.75)
+
 ## --- section_h: drawing triangle and circles ---
 '''
 

@@ -7,7 +7,7 @@
 ## --- section_a: triangle and square ---
 >>> side = 2  # side length
 >>> area = side * (side * 3**.5 / 2) / 2, aa * aa
-  # areas of an regular triangle and a square
+  # areas of a regular triangle and a square
 >>> area
 (1.7320508075688772, 4)
 
@@ -24,8 +24,8 @@
 ## --- section_c: area of n-th regular polygon ---
 >>> radius= 2  # radius of circumscribed circle
 >>> nn = 3  # number of sides
->>> theta = 2 * pi / nn
->>> area_tri = (2 * radius * sin(theta/2)) * (radius * cos(theta/2)) / 2
+>>> theta_nn = 2 * pi / nn
+>>> area_tri = (2 * radius * sin(theta_nn/2)) * (radius * cos(theta_nn/2)) / 2
 >>> area = nn * area_tri
 >>> area
 5.196152422706633
@@ -34,10 +34,10 @@
 ## --- section_d: calculating a series of polygon areas ---
 >>> radius = 2  # radius of circumscribed circle
 >>> for nn in range(3,6):
-...     theta = 2 * pi / nn
-...     area_tri = rr * sin(th/2) * rr * cos(th/2)
+...     theta_nn = 2 * pi / nn
+...     area_tri = rr * sin(theta_nn/2) * rr * cos(theta_nn/2)
 ...     area = area_tri * nn
-...     print(nn, radius, radius)
+...     print(nn, radius, area)
 ...
 3 2 5.196152422706633
 4 2 8.000000000000002

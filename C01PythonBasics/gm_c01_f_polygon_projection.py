@@ -33,11 +33,11 @@ print(f'Area: area = {abs(area):g}')
 # -----------------------------------------------------------------------------
 print("\n## --- section_d: calculating gravity center ---")
 ''' finding gravity center '''
-pointgx, pointgy = 0, 0
-for (i, point) in enumerate(points):
-    pointgx += point[0];     pointgy += point[1]
-pointgx /= len(points); pointgy /= len(points)
-print(f'Gravity center: (pgx,pgy) = ({pointgx:g}, {pointgy:g})')
+point_gg_xx, point_gg_yy = 0, 0
+for point in points:
+    point_gg_xx += point[0];     point_gg_yy += point[1]
+point_gg_xx /= len(points); point_gg_yy /= len(points)
+print(f'Gravity center: (xx,yy) = ({point_gg_xx:g}, {point_gg_yy:g})')
 
 # =============================================================================
 # terminal log / terminal log / terminal log /
@@ -45,14 +45,18 @@ print(f'Gravity center: (pgx,pgy) = ({pointgx:g}, {pointgy:g})')
 *** calculation of polygon using projection ***
 # -----------------------------------------------------------------------------
 ## --- section__: importing item from module ---
+
 ## --- section_a: setting points ---
 Points: points = ((2, 1), (3, 2), (2, 3), (1, 2))
+
 ## --- section_b: calculating sides ---
 Side length: sides = [1.4142135623730951, 1.4142135623730951, 1.4142135623730951, 1.4142135623730951]
 Circumference: ss = 5.65685
+
 ## --- section_c: calculating area ---
 Area: area = 2
+
 ## --- section_d: calculating gravity center ---
-Gravity center: (pgx,pgy) = (2, 2)
+Gravity center: (xx,yy) = (2, 2)
 '''
 

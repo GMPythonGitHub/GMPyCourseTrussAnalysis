@@ -19,12 +19,12 @@
 >>> aa, bb = 3, 2
 >>> aa, bb
 (3, 2)
->>> smm, sub, mul, div = aa + ba, aa - bb, aa * bb, aa / bb  # four variables
->>> smm, sub, mul, div
+>>> sum, sub, mul, div = aa + ba, aa - bb, aa * bb, aa / bb  # four variables
+>>> sum, sub, mul, div
 (5, 1, 6, 1.5)
->>> (smm + sub) / 2, (smm - sub) / 2
+>>> (sum + sub) / 2, (sum - sub) / 2
 (3.0, 2.0)
->>> result = aa + bb, aa - bb, aa * bb, aa / bb  # variable as 'tuple'
+>>> result = aa + bb, aa - bb, aa * bb, aa / bb  # variables as 'tuple'
 >>> result
 (5, 1, 6, 1.5)
 >>> (result[0] + result[1]) / 2, (result[0] - result[1]) / 2
@@ -33,8 +33,8 @@
 # -----------------------------------------------------------------------------
 ## --- section_c: introducing 'function' ---
 >>> def func(nn):  # returning 'tuple' including number, square and cubic
-...     sqr, cub = nn * nn, nn * nn * nn  # calculating square and cube
-...     return nn, sqr, cub  # returning three varues
+...     square, cubic = nn * nn, nn * nn * nn  # calculating square and cube
+...     return nn, square, cubic  # returning three values
 ...               # empty line is needed
 >>> func(5)
 (5, 25, 125)
