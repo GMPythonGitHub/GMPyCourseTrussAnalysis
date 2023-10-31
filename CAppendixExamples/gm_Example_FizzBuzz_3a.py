@@ -1,22 +1,47 @@
-# Fizz Buzz Problem: plan D **
+# gm_Example_FizzBuzz_3a: coded by Kinya MIURA 230414
+# Fizz Buzz Problem: plan 3A **
 # -----------------------------------------------------------------------------
-print('\n*** Fizz Buzz problem: Plan E ***')
+print('\n*** Fizz Buzz problem: Plan 3A ***')
 print('# -----------------------------------------------------------------------------')
 
 for i in range(1,31):
-    if i % 5 == 0:
-        print('Buzz ', end='')
+    if i%3 == 0:
+        print('Fizz')
     else:
-        print(i, end=' ')
-    if i % 10 == 0:
-        print()
-
+        print(i)  # results in single column
 # =============================================================================
 # terminal log / terminal log / terminal log /
 '''
-*** Fizz Buzz problem: Plan E ***
+*** Fizz Buzz problem: Plan 3A ***
 # -----------------------------------------------------------------------------
-1 2 3 4 Buzz 6 7 8 9 Buzz 
-11 12 13 14 Buzz 16 17 18 19 Buzz 
-21 22 23 24 Buzz 26 27 28 29 Buzz 
+1
+2
+Fizz
+4
+5
+Fizz
+7
+8
+Fizz
+10
+11
+Fizz
+13
+14
+Fizz
+16
+17
+Fizz
+19
+20
+Fizz
+22
+23
+Fizz
+25
+26
+Fizz
+28
+29
+Fizz
 '''

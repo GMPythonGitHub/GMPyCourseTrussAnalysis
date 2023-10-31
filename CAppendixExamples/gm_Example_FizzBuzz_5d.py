@@ -1,11 +1,12 @@
-# Fizz Buzz Problem: plan D **
+# gm_Example_FizzBuzz_5d: coded by Kinya MIURA 230414
+# Fizz Buzz Problem: plan 5D **
 # -----------------------------------------------------------------------------
-print('\n*** Fizz Buzz problem: Plan D ***')
+print('\n*** Fizz Buzz problem: Plan 5D ***')
 print('# -----------------------------------------------------------------------------')
 
 for i in range(1,31):
-    if i%3 == 0:
-        print(' Fizz', end='')
+    if i % 5 == 0:
+        print(' Buzz', end='')
     else:
         print(f'{i:5d}', end='')
     if i % 10 == 0:
@@ -14,9 +15,9 @@ for i in range(1,31):
 # =============================================================================
 # terminal log / terminal log / terminal log /
 '''
-*** Fizz Buzz problem: Plan D ***
+*** Fizz Buzz problem: Plan 5D ***
 # -----------------------------------------------------------------------------
-    1    2 Fizz    4    5 Fizz    7    8 Fizz   10
-   11 Fizz   13   14 Fizz   16   17 Fizz   19   20
- Fizz   22   23 Fizz   25   26 Fizz   28   29 Fizz
+    1    2    3    4 Buzz    6    7    8    9 Buzz
+   11   12   13   14 Buzz   16   17   18   19 Buzz
+   21   22   23   24 Buzz   26   27   28   29 Buzz
 '''
