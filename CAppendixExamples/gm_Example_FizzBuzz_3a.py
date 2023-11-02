@@ -1,18 +1,18 @@
 # gm_Example_FizzBuzz_3a: coded by Kinya MIURA 230414
 # Fizz Buzz Problem: plan 3A **
 # -----------------------------------------------------------------------------
-print('\n*** Fizz Buzz problem: Plan 3A ***')
+print('\n*** Fizz Buzz problem: Plan 3A ***  1 number in a line')
 print('# -----------------------------------------------------------------------------')
 
 for i in range(1,31):
     if i%3 == 0:
         print('Fizz')
     else:
-        print(i)  # results in single column
+        print(i)  # 1 number in a line
 # =============================================================================
 # terminal log / terminal log / terminal log /
 '''
-*** Fizz Buzz problem: Plan 3A ***
+*** Fizz Buzz problem: Plan 3A ***  1 number in a line
 # -----------------------------------------------------------------------------
 1
 2

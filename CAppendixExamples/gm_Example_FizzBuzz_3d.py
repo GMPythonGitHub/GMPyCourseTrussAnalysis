@@ -1,15 +1,15 @@
 # gm_Example_FizzBuzz_3d: coded by Kinya MIURA 230414
 # Fizz Buzz Problem: plan 3D **
 # -----------------------------------------------------------------------------
-print('\n*** Fizz Buzz problem: Plan 3D ***')
+print('\n*** Fizz Buzz problem: Plan 3D ***  with 5 columns, 10 numbers in a line')
 print('# -----------------------------------------------------------------------------')
 
 for i in range(1,31):
     if i%3 == 0:
-        print(' Fizz', end='')
+        print(' Fizz', end='')  # with 5 columns
     else:
-        print(f'{i:5d}', end='')
-    if i % 10 == 0:
+        print(f'{i:5d}', end='')  # with 5 columns
+    if i % 10 == 0:  # 10 numbers in a line
         print()
 
 # =============================================================================
