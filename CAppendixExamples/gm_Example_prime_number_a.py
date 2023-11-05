@@ -4,19 +4,16 @@ print('\n*** ------------ ***')
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-number = 60
-primes = []  # 'list' of prime numbers
-for num in range(2,number+1):
-    flg = False
-    for i in primes:
-        if num % i == 0:
-            flg = True
-            break
-    if not flg:
-        primes.append(num)
-
-print(f'{number = }')
-print(f'{primes = }')
+num = 29
+flg = False
+for i in range(2, num):
+    if num % i == 0:
+        flg = True
+        break
+if flg:
+    print(f'{num} is not a prime number!')
+else:
+    print(f'{num} is a prime number!')
 
 # =============================================================================
 # terminal log / terminal log / terminal log /

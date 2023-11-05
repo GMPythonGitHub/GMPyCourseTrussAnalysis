@@ -1,24 +1,22 @@
 # gm_Example_prime_number_b: coded by Kinya MIURA 230415
 # -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-def prime_numbers(number):
-    numbers = list(range(number+1))  # table of numbers
-    numbers[0], numbers[1] = None, None  # '0' and '1' both are not prime number
-    primes = []  # 'list' of prime numbers
-    for num in numbers:
-        if num is not None:
-            primes.append(num)
-            numnum = num * num
-            while numnum <= number:
-                numbers[numnum] = None
-                numnum += num
-    return primes
+print('\n*** ------------ ***')
+print('# -----------------------------------------------------------------------------')
 
-# ////////////////////////////////////////////////////////////////////////////
-if __name__ == '__main__':
-    number = 60
-    print(f'{number = }')
-    print(f'{prime_numbers(number) = }')
+# -----------------------------------------------------------------------------
+number = 60
+primes = []  # 'list' of prime numbers
+for num in range(2,number+1):
+    flg = False
+    for i in primes:
+        if num % i == 0:
+            flg = True
+            break
+    if not flg:
+        primes.append(num)
+
+print(f'{number = }')
+print(f'{primes = }')
 
 # =============================================================================
 # terminal log / terminal log / terminal log /
