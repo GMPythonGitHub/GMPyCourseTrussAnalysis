@@ -13,7 +13,7 @@ aa1 = [
     [1., 1., 1., 1., 5., 1.],
     [1., 1., 1., 1., 1., 6.] ]
 bb1 = [0., 23., 27., 0., 0., 51.]
-xx1 = [1., 0., 0., 4., 5., 6.]
+xx1 = [1., 0., 0., 4., 5., 0.]
 fix_bb1 = (False, True, True, False, False, True)
 fix_xx1 = (True, False, False, True, True, False)
 aa2 = [
