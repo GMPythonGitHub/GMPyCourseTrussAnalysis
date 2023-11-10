@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------------
 print('\n*** Matrix Equation Anp: aa * xx = bb; find bb ***')
 print('# -----------------------------------------------------------------------------')
-from numpy import (array, dot)
+from numpy import (array, dot as iprd)
 
 # -----------------------------------------------------------------------------
 aa1 = array([
@@ -23,7 +23,7 @@ aa2 = array([
 xx = array([1., 2., 3., 4., 5., 6.])
 bb = array([0., 0., 0., 0., 0., 0.])
 
-bb = dot(aa2,xx)
+bb = iprd(aa2,xx)
 print(f'{aa2 = }')
 print(f'{xx = }')
 print(f'{bb = }')
