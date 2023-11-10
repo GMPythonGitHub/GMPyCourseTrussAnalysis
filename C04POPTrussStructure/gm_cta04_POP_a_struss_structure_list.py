@@ -1,11 +1,11 @@
-# gm_c04_MatrixCalculation_A0_list: coded by Kinya MIURA 230505
+# gm_cta04_POP_a_truss_structure_list: coded by Kinya MIURA 230505
 # -----------------------------------------------------------------------------
-print("\n*** POP for solving Truss Structure A0: enhanced by using 'list' ***")
+print("\n*** POP for solving Truss Structure ver. a: enhanced by using 'list' ***")
 print('# -----------------------------------------------------------------------------')
 
 # -----------------------------------------------------------------------------
-print('## --- section__: importing libraries ---')
-import numpy as np  # import 'numpy' library
+print('## --- section__: importing modules ---')
+import numpy as np  # importing module 'numpy'
 
 # -----------------------------------------------------------------------------
 print('## --- section_a: setting truss structure ---')
@@ -19,7 +19,7 @@ posx = [0., ll, 0., ll]  # (m) position coordinate
 posy = [0., 0., ll, ll]
 fxcx = [True, True, False, False]  # fixity condition
 fxcy = [True, True, False, False]
-lcnx = [0, 2, 4, 6]  # location in matrix equation
+lcnx = [0, 2, 4, 6]  # location in global matrix equation
 lcny = [1, 3, 5, 7]
 dspx = [0., 0., 0., 0.]  # (m) displacement
 dspy = [0., 0., 0., 0.]
@@ -43,84 +43,82 @@ for i in range(nmemb):  # length and direction angle
     dxx = (posx[nodeb[i]]-posx[nodea[i]])
     dyy = (posy[nodeb[i]]-posy[nodea[i]])
     lng[i] = np.sqrt(np.square(dxx)+np.square(dyy))
-    tht[i] = np.arctan2(dyy,dxx)
+    tht[i] = np.arctan2(dyy, dxx)
 
 # -----------------------------------------------------------------------------
 print('\n## --- section_b: building global matrix equation ---')
-stf = [[0.]*dfrd for i in range(dfrd)]  # global stiffness matrix
-dsp = [0.]*dfrd  # global displacement vector
-efc = [0.]*dfrd  # global external force vector
-fxc = [True]*dfrd  # global fixity condition vector
+stf_glb = [[0.]*dfrd for i in range(dfrd)]  # global stiffness matrix
+dsp_glb = [0.]*dfrd  # global displacement vector
+efc_glb = [0.]*dfrd  # global external force vector
+fxc_glb = [True]*dfrd  # global fixity condition vector
 # -----------------------------------------------------------------------------
 print('## --- section_b1: building global matrix ---')
 for i in range(nmemb):
     co, sn = np.cos(tht[i]), np.sin(tht[i])
     cof = yng[i] * ara[i] / lng[i]
-    ss = [  # local stiffness matrix
+    stf = [  # local stiffness matrix
         [+co*co*cof, +co*sn*cof, -co*co*cof, -co*sn*cof],
         [+sn*co*cof, +sn*sn*cof, -sn*co*cof, -sn*sn*cof],
         [-co*co*cof, -co*sn*cof, +co*co*cof, +co*sn*cof],
         [-sn*co*cof, -sn*sn*cof, +sn*co*cof, +sn*sn*cof] ]
-    lcnv = [  # location number vector in member
-        lcnx[nodea[i]],lcny[nodea[i]],lcnx[nodeb[i]],lcny[nodeb[i]] ]
+    lcn = [  # location number vector in member
+        lcnx[nodea[i]],lcny[nodea[i]],lcnx[nodeb[i]],lcny[nodeb[i]]]
     for j in range(2*2):  # comprising global stiffness matrix
         for k in range(2*2):
-            stf[lcnv[j]][lcnv[k]] += ss[j][k]
+            stf_glb[lcn[j]][lcn[k]] += stf[j][k]
 # -----------------------------------------------------------------------------
 print('## --- section_b2: building global vector ---')
 for i in range(nnode):
-    dsp[lcnx[i]], dsp[lcny[i]] = dspx[i], dspy[i]  # displacement
-    efc[lcnx[i]], efc[lcny[i]] = efcx[i], efcy[i]  # external force
-    fxc[lcnx[i]], fxc[lcny[i]] = fxcx[i], fxcy[i]  # fixity condition
+    dsp_glb[lcnx[i]], dsp_glb[lcny[i]] = dspx[i], dspy[i]  # displacement
+    efc_glb[lcnx[i]], efc_glb[lcny[i]] = efcx[i], efcy[i]  # external force
+    fxc_glb[lcnx[i]], fxc_glb[lcny[i]] = fxcx[i], fxcy[i]  # fixity condition
 
 # -----------------------------------------------------------------------------
-print('## --- section_c: solbing global matrix equation ---')
+print('## --- section_c: solving global matrix equation ---')
 # -----------------------------------------------------------------------------
 print('## --- section_c1: preparing working space ---')
 wk = 0  # counting working space size
 for i in range(dfrd):
-    if not fxc[i]: wk += 1
-aa = [[0.]*wk for i in range(wk)]  # matrix
+    if not fxc_glb[i]: wk += 1
+aa = [[0.] * wk for i in range(wk)]  # matrix
 bb, xx = [0.]*wk, [0.]*wk  # vectors
 # -----------------------------------------------------------------------------
-print('## --- section_c2: setting working matrix ---')
+print('## --- section_c2: setting working matrix and vectors ---')
 ii = 0
 for i in range(dfrd):
-    if not fxc[i]:
+    if not fxc_glb[i]:
         jj = 0
         for j in range(dfrd):
-            if not fxc[j]:
-                aa[ii][jj] = stf[i][j]
+            if not fxc_glb[j]:
+                aa[ii][jj] = stf_glb[i][j]
                 jj += 1
         ii += 1
-# -----------------------------------------------------------------------------
-print('## --- section_c3: setting working vectors ---')
 ii = 0
 for i in range(dfrd):
-    if not fxc[i]:
-        xx[ii], bb[ii] = dsp[i], efc[i]
+    if not fxc_glb[i]:
+        xx[ii], bb[ii] = dsp_glb[i], efc_glb[i]
         for j in range(dfrd):
-            if fxc[j]: bb[ii] -= stf[i][j] * dsp[j]
+            if fxc_glb[j]: bb[ii] -= stf_glb[i][j] * dsp_glb[j]
         ii += 1
 # -----------------------------------------------------------------------------
-print('## --- section_c4: solving matrix equation ---')
-xx = np.linalg.solve(aa,bb)
+print('## --- section_c3: solving working matrix equation ---')
+xx = np.linalg.solve(aa, bb)
 ii = 0
 for i in range(dfrd):
-    if not fxc[i]:
-        dsp[i] = xx[ii]; ii += 1
+    if not fxc_glb[i]:
+        dsp_glb[i] = xx[ii]; ii += 1
 for i in range(dfrd):
-    efc[i] = 0.
+    efc_glb[i] = 0.
     for j in range(dfrd):
-        efc[i] += stf[i][j] * dsp[j]
+        efc_glb[i] += stf_glb[i][j] * dsp_glb[j]
 
 # -----------------------------------------------------------------------------
-print('\n## --- section_d: calculating truss structure ---')
+print('\n## --- section_d: calculating behavior of truss structure ---')
 # -----------------------------------------------------------------------------
 print('## --- section_d1: calculating truss nodes ---')
 for i in range(nnode):
-    dspx[i], dspy[i] = dsp[lcnx[i]], dsp[lcny[i]]
-    efcx[i], efcy[i] = efc[lcnx[i]], efc[lcny[i]]
+    dspx[i], dspy[i] = dsp_glb[lcnx[i]], dsp_glb[lcny[i]]
+    efcx[i], efcy[i] = efc_glb[lcnx[i]], efc_glb[lcny[i]]
 # -----------------------------------------------------------------------------
 print('## --- section_d2: calculating truss members ---')
 for i in range(nmemb):
@@ -174,7 +172,7 @@ print('afc(kN) =', afc)
 # =============================================================================
 # terminal log / terminal log / terminal log /
 '''
-*** POP for solving Truss Structure A0: enhanced by using 'list' ***
+*** POP for solving Truss Structure ver. a: enhanced by using 'list' ***
 # -----------------------------------------------------------------------------
 ## --- section__: importing libraries ---
 ## --- section_a: setting truss structure ---
@@ -184,7 +182,6 @@ print('afc(kN) =', afc)
 ## --- section_b: building global matrix equation ---
 ## --- section_b1: building global matrix ---
 ## --- section_b2: building global vector ---
-
 ## --- section_c: solbing global matrix equation ---
 ## --- section_c1: preparing working space ---
 ## --- section_c2: setting working matrix ---
