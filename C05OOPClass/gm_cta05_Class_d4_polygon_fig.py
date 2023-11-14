@@ -1,4 +1,4 @@
-# gm_c05_c2_polygon_fig.py: coded by Kinya MIURA 230518
+# gm_cta05_Class_d4_polygon_fig.py: coded by Kinya MIURA 230518
 # -----------------------------------------------------------------------------
 print("\n*** (GMPolygon) class for segment ***")
 print("  *** class GMpoint and GMSegment are embedded as list pints and segms ***")
@@ -6,68 +6,7 @@ print("# -----------------------------------------------------------------------
 
 # -----------------------------------------------------------------------------
 print("## --- section__: (GMPolygon) importing items from module ---")
-from numpy import (ndarray, array)
-from gm_c05_c1_segment import (GMPoint, GMSegment)
-
-# -----------------------------------------------------------------------------
-print("## --- section_a: (GMPolygon) declaring class ---")
-class GMPolygon():
-    # -----------------------------------------------------------------------------
-    print("## --- section_b: (GMPolygon) initializing class instance ---")
-    def __init__(self, points: tuple = ((1.,3.),(4,4),(3.,1.),(1.,1.),)):
-        self.set_polygon(points)
-
-    # -----------------------------------------------------------------------------
-    print("## --- section_c: (GMPolygon) setting and getting functions ---")
-    def set_polygon(self, points: tuple = ((1.,3.),(4,4),(3.,1.),(1.,1.),)):
-        self._pints, self._segms = [], []
-        for point in points:
-            self._pints.append(GMPoint(point))
-        for i, pint in enumerate(self._pints):
-            self._segms.append(GMSegment(self._pints[i-1], pint))
-
-    # -----------------------------------------------------------------------------
-    print("## --- section_d: (GMPolygon) string function for print() ---")
-    def __str__(self) -> str:
-        return ''
-    def prtcls(self, idx: str = '') -> None:
-        st = idx + ':: GMSegment ::\n'
-        st += '  pints[]: GMPoint:\n'
-        for i, pint in enumerate(self._pints):
-            st += f'  [{i}]: ' + pint.__str__() + '\n'
-        st += '  segms[]: GMSegment:\n'
-        for i, segm in enumerate(self._segms):
-            st += f'  [{i}] \t: pinta: GMPoint' + segm._pinta.__str__() + '\n'
-            st +=  '    \t: pintb: GMPoint' + segm._pintb.__str__() + '\n'
-        print(st)
-
-    # -----------------------------------------------------------------------------
-    print("## --- section_e: (GMPolygon) calculating polygon properties ---")
-    def pint_grav(self) -> ndarray:
-        pint_grav = array([0.,0.])
-        for pint in self._pints:
-            pint_grav += pint.xxyy()
-        return pint_grav / len(self._segms)
-    def leng_segms(self) -> float:
-        leng_segms = 0.
-        for segm in self._segms:
-            leng_segms += segm.leng()
-        return leng_segms
-    def area_prod(self) -> float:  # area from cross product
-        area = 0.
-        for segm in self._segms:
-            area += segm.crosprod_pa2pb()
-        return abs(area) / 2.
-    def area_projxx(self) -> float:  # area from projection in x-dir.
-        area = 0.
-        for segm in self._segms:
-            area += segm.projxx_pa2pb()
-        return abs(area)
-    def area_projyy(self) -> float:  # area from projection in y-dir.
-        area = 0.
-        for segm in self._segms:
-            area += segm.projyy_pa2pb()
-        return abs(area)
+from gm_cta05_Class_d4_polygon import GMPolygon
 
 # =============================================================================
 # =============================================================================
@@ -80,11 +19,11 @@ if __name__ == '__main__':
 
     # -----------------------------------------------------------------------------
     print("## --- section_mb: calculating polygon ---")
-    print(f'{polg.pint_grav() = }')
-    print(f'{polg.leng_segms() = }')
-    print(f'{polg.area_prod() = }')
-    print(f'{polg.area_projxx() = }')
-    print(f'{polg.area_projyy() = }')
+    print(f'{polg.grav_ctr() = }')
+    print(f'{polg.leng() = }')
+    print(f'{polg.area_prd() = }')
+    print(f'{polg.area_prjx() = }')
+    print(f'{polg.area_prjy() = }')
 
     # -----------------------------------------------------------------------------
     print("\n## --- section_mc: drawing polygon ---")
@@ -93,13 +32,33 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(figsize=(6., 6.))
     fig.suptitle('polygon and gravity center')
     for segm in polg._segms:
-        prod = segm.crosprod_pa2pb()
-        if prod>= 0:
-            clr = 'C1'
-        else:
-            clr = 'C2'
-        pinta, pintb = segm._pinta, segm._pintb
-        xy = [[0, 0], list(pinta.xxyy()), list(pintb.xxyy())]
+        idx = ('outer product', 'projection to x-axis', 'projection to y-axis')[2]
+        if idx == 'outer product':
+            prd = segm.oprd()
+            if prd>= 0:
+                clr = 'C1'
+            else:
+                clr = 'C2'
+            pinta, pintb = segm._pinta, segm._pintb
+            xy = ((0, 0), tuple(pinta.xxyy()), tuple(pintb.xxyy()))
+        elif idx == 'projection to x-axis':
+            prj = segm.prjx()
+            if prj >= 0:
+                clr = 'C1'
+            else:
+                clr = 'C2'
+            pintaxx, pintayy = segm._pinta.xxyy()
+            pintbxx, pintbyy = segm._pintb.xxyy()
+            xy = ((pintaxx, 0), (pintbxx, 0), (pintbxx, pintbyy), (pintaxx, pintayy))
+        elif idx == 'projection to y-axis':
+            prj = segm.prjy()
+            if prj >= 0:
+                clr = 'C1'
+            else:
+                clr = 'C2'
+            pintaxx, pintayy = segm._pinta.xxyy()
+            pintbxx, pintbyy = segm._pintb.xxyy()
+            xy = ((0, pintayy), (0, pintbyy), (pintbxx, pintbyy), (pintaxx, pintayy))
         ptc = pat.Polygon(xy=xy, closed=True,
             linestyle='-', linewidth=1., edgecolor=clr, fill=True, facecolor=clr,
             alpha=0.2)
@@ -115,13 +74,13 @@ if __name__ == '__main__':
         linestyle='-', linewidth=2., edgecolor='C3', fill=False)
     ax.add_patch(ptc)
 
-    pintgxx, pintgyy = polg.pint_grav()
-    ax.scatter([pintgxx], [pintgyy],
+    pintgxx, pintgyy = polg.grav_ctr()
+    ax.scatter((pintgxx,), (pintgyy,),
         marker='o', s=40, color='C3', edgecolor='C3', label='gravity center')
 
     ax.set_aspect('equal')
     ax.legend()
-    fig.savefig('gm_c05_c2_polygon.png')
+    fig.savefig('gm_cta05_Class_d4_polygon_fig.png')
     plt.show()
 
     # =============================================================================

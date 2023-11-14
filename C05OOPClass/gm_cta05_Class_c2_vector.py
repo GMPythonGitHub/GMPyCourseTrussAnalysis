@@ -1,26 +1,26 @@
-# gm_c05_a_vector_b.py: coded by Kinya MIURA 230428
+# gm_cta05_Class_c2_vector.py: coded by Kinya MIURA 230428
 # -----------------------------------------------------------------------------
-print('\n*** class GMVector for vector: ver. b ***')
+print('\n*** class GMVector for vector: ver. 2 ***')
 print('  *** introducing list and ndarray ***')
 
 print('# -----------------------------------------------------------------------------')
-print('## --- section__: (GMVectorB) importing item from module ---')
+print('## --- section__: (GMVector2) importing item from module ---')
 from numpy import (
     square, sqrt, sin, cos, arctan2 as atan2,
     deg2rad as d2r, rad2deg as r2d, ndarray, array )
 
 # -----------------------------------------------------------------------------
-print('## --- section_a: (GMVectorB) defining class ---')
-class GMVectorB():
+print('## --- section_a: (GMVector2) declaring class ---')
+class GMVector2():
     # -----------------------------------------------------------------------------
-    print('## --- section_a1: (GMVectorB) initializing class instance---')
+    print('## --- section_a1: (GMVector2) initializing class instance---')
     def __init__(self,
             xxyy: tuple = (1., 1.), rrth: tuple = None, cnv: bool = True):
         self.__xxyy = None  # declaring instance variables
         self.set_vector(xxyy, rrth, cnv=cnv)
 
     # -----------------------------------------------------------------------------
-    print('## --- section_a2: (GMVectorB) setting and getting functions ---')
+    print('## --- section_a2: (GMVector2) setting and getting functions ---')
     ## setting functions
     def set_vector(self,
             xxyy: tuple = None, rrth: tuple = None, cnv: bool = True) -> None:
@@ -38,22 +38,23 @@ class GMVectorB():
         return array((rr, th))
 
     # -----------------------------------------------------------------------------
-    print('## --- section_a3: (GMVectorB) string function for print() ---')
+    print('## --- section_a3: (GMVector2) string function for print() ---')
     def __str__(self) -> str:
         xx, yy = self.__xxyy; rr, th = self.rrth(cnv=True)
         return f'(xx,yy) = ({xx:g},{yy:g}), (rr,th) = ({rr:g},{th:g})'
 
     # -----------------------------------------------------------------------------
-    print('## --- section_a4: (GMVectorB) calculating unit vector ---')
+    print('## --- section_a4: (GMVector2) calculating unit vector ---')
     def uvct(self) -> ndarray:
         rr, _ = self.rrth()
         return array([self.__xxyy[0] / rr, self.__xxyy[1] / rr])
 
 # =============================================================================
-print('\n## --- section_b: (GMVectorB) creating class instance ---')
-vecta = GMVectorB(xxyy=(1., 1.)); print('vecta: ', vecta)
-vectb = GMVectorB(rrth=(2., 30.)); print('vectb: ', vectb)
-vectc = GMVectorB(rrth=(2., 120.)); print('vectc: ', vectc)
+# =============================================================================
+print('\n## --- section_b: creating class instance ---')
+vecta = GMVector2(rrth=(2., 0.)); print('vecta: ', vecta)
+vectb = GMVector2(rrth=(2., 30.)); print('vectb: ', vectb)
+vectc = GMVector2(rrth=(2., 90.)); print('vectc: ', vectc)
 
 # -----------------------------------------------------------------------------
 print('\n## --- section_c: calculating unit vectors ---')
@@ -64,22 +65,23 @@ print(f'{vectc.uvct() = }')
 # =============================================================================
 # terminal log / terminal log / terminal log /
 '''
-*** class GMVector for vector: ver. b ***
+*** class GMVector for vector: ver. 2 ***
   *** introducing list and ndarray ***
 # -----------------------------------------------------------------------------
-## --- section__: (GMVectorB) importing item from module ---
-## --- section_a: (GMVectorB) defining class ---
-## --- section_a1: (GMVectorB) initializing class instance---
-## --- section_a2: (GMVectorB) setting and getting functions ---
-## --- section_a3: (GMVectorB) string function for print() ---
-## --- section_a4: (GMVectorB) calculating unit vector ---
+## --- section__: (GMVector2) importing item from module ---
+## --- section_a: (GMVector2) declaring class ---
+## --- section_a1: (GMVector2) initializing class instance---
+## --- section_a2: (GMVector2) setting and getting functions ---
+## --- section_a3: (GMVector2) string function for print() ---
+## --- section_a4: (GMVector2) calculating unit vector ---
 
-## --- section_b: (GMVectorB) creating class instance ---
-vecta:  (xx,yy) = (1,1), (rr,th) = (1.41421,45)
+## --- section_b: creating class instance ---
+vecta:  (xx,yy) = (2,0), (rr,th) = (2,0)
 vectb:  (xx,yy) = (1.73205,1), (rr,th) = (2,30)
-vectb:  (xx,yy) = (1.73205,1), (rr,th) = (2,30)
+vectc:  (xx,yy) = (1.22465e-16,2), (rr,th) = (2,90)
 
 ## --- section_c: calculating unit vectors ---
-vecta.uvct() = array([0.70710678, 0.70710678])
+vecta.uvct() = array([1., 0.])
 vectb.uvct() = array([0.8660254, 0.5      ])
+vectc.uvct() = array([6.123234e-17, 1.000000e+00])
 '''

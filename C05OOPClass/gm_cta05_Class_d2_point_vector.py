@@ -1,4 +1,4 @@
-# gm_c05_c0_point_vector.py: coded by Kinya MIURA 230518
+# gm_cta05_Class_d2_point_vector.py: coded by Kinya MIURA 230518
 # -----------------------------------------------------------------------------
 print("\n*** (GMPointVector) class for position vector ***")
 print("  *** class GMPoint is inherited; class GMVector is embedded as vect ***")
@@ -7,9 +7,10 @@ print("# -----------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 print("## --- section__: (GMPointVector) importing items from module ---")
 from numpy import (
-    ndarray, array, dot as dott, cross as cros, tensordot as tnsr )
-from gm_c05_b0_vector import GMVector
-from gm_c05_b1_point import GMPoint
+    ndarray, dot as iprd, cross as oprd)
+import copy
+from gm_cta05_Class_d0_vector import GMVector
+from gm_cta05_Class_d1_point import GMPoint
 
 # -----------------------------------------------------------------------------
 print("## --- section_a: (GMPointVector) declaring class ---")
@@ -17,10 +18,10 @@ class GMPointVector(GMPoint):  # inheriting GMPoint
     # -----------------------------------------------------------------------------
     print("## --- section_b: (GMPointVector) initializing class instance ---")
     def __init__(self,
-            xxyy: tuple = (1., 1.), rrth: tuple = None, cnv: bool = True,
-            vect: GMVector = GMVector()):
-        super().__init__(xxyy, rrth, cnv=cnv)
-        self._vect = vect
+            xxyy: tuple = (1., 1.), rrth: tuple = None,
+            unit: float = 1., cnv: bool = True ) -> None:
+        super().__init__(xxyy=xxyy, rrth=rrth, unit=unit, cnv=cnv)
+        self._vect = GMVector(xxyy=(0., 0.), unit=1.)
 
     # -----------------------------------------------------------------------------
     print("## --- section_c: (GMPointVector) string function for print() ---")
@@ -28,18 +29,26 @@ class GMPointVector(GMPoint):  # inheriting GMPoint
         return super().__str__()
     def prtcls(self, idx: str = '') -> None:
         print(
-            idx + ':: GMPrint ::\n'
-            + '  (sup) GMVector:' + self.__str__() + '\n'
-            + '  vect: GMVector:' + self._vect.__str__())
+            idx + ':: GMPointVector ::\n'
+            + '  (super) GMPoint:' + self.__str__() + '\n'
+            + '  vect: GMVector:' + self._vect.__str__() )
 
     # -----------------------------------------------------------------------------
     print("## --- section_d: (GMPoint) calculating position vector ---")
-    def tipvect(self) -> ndarray:
-        return self.xxyy() + self._vect.xxyy()
-    def dottprod_pint2vect(self) -> ndarray:
-        return dott(self.xxyy(),self._vect.xxyy())
-    def crosprod_pint2vect(self) -> ndarray:
-        return cros(self.xxyy(), self._vect.xxyy())
+    def copy(self) -> object:
+        return copy.deepcopy(self)
+    def tipvect(self, cnv: bool = True) -> ndarray:
+        tipvect =  self.xxyy(False) + self._vect.xxyy(False)
+        if cnv: return tipvect / self.unit()
+        else: return tipvect
+    def innerprod_pint2vect(self, cnv: bool = True) -> ndarray:
+        innerprod = iprd(self.xxyy(False), self._vect.xxyy(False))
+        if cnv: return innerprod / self.unit() / self.unit()
+        else: return innerprod
+    def outerprod_pint2vect(self, cnv: bool = True) -> ndarray:
+        outerprod = oprd(self.xxyy(False), self._vect.xxyy(False))
+        if cnv: return outerprod / self.unit() / self.unit()
+        else: return outerprod
 
 
 # =============================================================================
@@ -47,23 +56,21 @@ class GMPointVector(GMPoint):  # inheriting GMPoint
 if __name__ == '__main__':
     # -----------------------------------------------------------------------------
     print("\n## --- section_ma: creating class instances ---")
-    pintvecta = GMPointVector(xxyy=(1., 2.), vect=GMVector((3., 1.)))
+    pintvecta = GMPointVector(xxyy=(1., 2.), unit=10.)
+    pintvecta._vect=GMVector(xxyy=(2., -1.))
+    pintvectb = GMPointVector(xxyy=(2., 1.), unit=10.)
+    pintvectb._vect=GMVector(xxyy=(-1., 2.))
     pintvecta.prtcls('pintvecta -> ')
-    pintvectb = GMPointVector(xxyy=(2., 1.), vect=GMVector((1., 3.)))
     pintvectb.prtcls('pintvectb -> ')
 
     # -----------------------------------------------------------------------------
     print("\n## --- section_mb: calculating tip vectors and products ---")
-    pintvecta.set_xxyy((1., 2.)); pintvecta._vect.set_xxyy((2., -1.))
-    pintvecta.prtcls('pintvecta -> ')
-    pintvectb.set_xxyy((2., 1.)); pintvectb._vect.set_xxyy((-1., 2.))
-    pintvecta.prtcls('pintvectb -> ')
     print(f'{pintvecta.tipvect() = }')
     print(f'{pintvectb.tipvect() = }')
-    print(f'{pintvecta.dottprod_pint2vect() = }')
-    print(f'{pintvectb.dottprod_pint2vect() = }')
-    print(f'{pintvecta.crosprod_pint2vect() = }')
-    print(f'{pintvectb.crosprod_pint2vect() = }')
+    print(f'{pintvecta.innerprod_pint2vect() = }')
+    print(f'{pintvectb.innerprod_pint2vect() = }')
+    print(f'{pintvecta.outerprod_pint2vect() = }')
+    print(f'{pintvectb.outerprod_pint2vect() = }')
 
     # =============================================================================
     # terminal log / terminal log / terminal log /

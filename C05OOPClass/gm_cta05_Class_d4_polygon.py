@@ -1,4 +1,4 @@
-# gm_c05_c2_polygon.py: coded by Kinya MIURA 230518
+# gm_cta05_Class_d4_polygon.py: coded by Kinya MIURA 230518
 # -----------------------------------------------------------------------------
 print("\n*** (GMPolygon) class for segment ***")
 print("  *** class GMpoint and GMSegment are embedded as list pints and segms ***")
@@ -7,14 +7,15 @@ print("# -----------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 print("## --- section__: (GMPolygon) importing items from module ---")
 from numpy import (ndarray, array)
-from gm_c05_c1_segment import (GMPoint, GMSegment)
+from gm_cta05_Class_d1_point import (GMPoint)
+from gm_cta05_Class_d3_segment import (GMSegment)
 
 # -----------------------------------------------------------------------------
 print("## --- section_a: (GMPolygon) declaring class ---")
 class GMPolygon():
     # -----------------------------------------------------------------------------
     print("## --- section_b: (GMPolygon) initializing class instance ---")
-    def __init__(self, points: tuple = ((1.,3.),(4,4),(3.,1.),(1.,1.),)):
+    def __init__(self, points: tuple = ((1.,3.),(4.,4.),(3.,1.),(1.,1.),)):
         self.set_polygon(points)
 
     # -----------------------------------------------------------------------------
@@ -31,7 +32,7 @@ class GMPolygon():
     def __str__(self) -> str:
         return ''
     def prtcls(self, idx: str = '') -> None:
-        st = idx + ':: GMSegment ::\n'
+        st = idx + ':: GMPolygon ::\n'
         st += '  pints[]: GMPoint:\n'
         for i, pint in enumerate(self._pints):
             st += f'  [{i}]: ' + pint.__str__() + '\n'
@@ -43,30 +44,30 @@ class GMPolygon():
 
     # -----------------------------------------------------------------------------
     print("## --- section_e: (GMPolygon) calculating polygon properties ---")
-    def pint_grav(self) -> ndarray:
-        pint_grav = array([0.,0.])
+    def grav_ctr(self) -> ndarray:
+        grav_ctr = array([0.,0.])
         for pint in self._pints:
-            pint_grav += pint.xxyy()
-        return pint_grav / len(self._pints)
-    def leng_segms(self) -> float:
-        leng_segms = 0.
+            grav_ctr += pint.xxyy()
+        return grav_ctr / len(self._pints)
+    def leng(self) -> float:
+        leng = 0.
         for segm in self._segms:
-            leng_segms += segm.leng()
-        return leng_segms
-    def area_prod(self) -> float:  # area from cross product
+            leng += segm.leng()
+        return leng
+    def area_prd(self) -> float:  # area from cross product
         area = 0.
         for segm in self._segms:
-            area += segm.crosprod_pa2pb()
+            area += segm.oprd()
         return abs(area) / 2.
-    def area_projxx(self) -> float:  # area from projection in x-dir.
+    def area_prjx(self) -> float:  # area from projection in x-dir.
         area = 0.
         for segm in self._segms:
-            area += segm.projxx_pa2pb()
+            area += segm.prjx()
         return abs(area)
-    def area_projyy(self) -> float:  # area from projection in y-dir.
+    def area_prjy(self) -> float:  # area from projection in y-dir.
         area = 0.
         for segm in self._segms:
-            area += segm.projyy_pa2pb()
+            area += segm.prjy()
         return abs(area)
 
 # =============================================================================
@@ -80,11 +81,11 @@ if __name__ == '__main__':
 
     # -----------------------------------------------------------------------------
     print("## --- section_mb: calculating polygon ---")
-    print(f'{polg.pint_grav() = }')
-    print(f'{polg.leng_segms() = }')
-    print(f'{polg.area_prod() = }')
-    print(f'{polg.area_projxx() = }')
-    print(f'{polg.area_projyy() = }')
+    print(f'{polg.grav_ctr() = }')
+    print(f'{polg.leng() = }')
+    print(f'{polg.area_prd() = }')
+    print(f'{polg.area_prjx() = }')
+    print(f'{polg.area_prjy() = }')
 
     # =============================================================================
     # terminal log / terminal log / terminal log /
@@ -149,9 +150,9 @@ if __name__ == '__main__':
             : pintb: GMPoint: (xx,yy) = (0, 0) : (rr,th) = (0, 0)
     
     ## --- section_mb: calculating polygon ---
-    polg.pint_grav() = array([2., 2.])
-    polg.leng_segms() = 12.649110640673518
-    polg.area_prod() = 8.0
-    polg.area_projxx() = 8.0
-    polg.area_projyy() = 8.0
+    polg.grav_ctr() = array([2., 2.])
+    polg.leng() = 12.649110640673518
+    polg.area_prd() = 8.0
+    polg.area_prjx() = 8.0
+    polg.area_prjy() = 8.0
     '''
