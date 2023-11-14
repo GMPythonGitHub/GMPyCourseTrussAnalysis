@@ -1,4 +1,4 @@
-# gm_cta03_matrix_equation_anp: coded by Kinya MIURA 231104
+# gm_cta03_matrix_equation_anp_prob_1: coded by Kinya MIURA 231104
 # -----------------------------------------------------------------------------
 print('\n*** Matrix Equation Anp: aa * xx = bb; find bb ***')
 print('# -----------------------------------------------------------------------------')
