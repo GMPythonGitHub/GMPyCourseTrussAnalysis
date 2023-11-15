@@ -9,7 +9,8 @@ from numpy import (sqrt)
 
 # -----------------------------------------------------------------------------
 print('\n## --- section_a: setting points ---')
-points = ((2,1), (3,2), (2,3), (1,2))  # using 'tuple' of two dimension
+# points = ((2,1), (3,2), (2,3), (1,2))  # using 'tuple' of two dimension
+points = ((+3,-2), (+2,0), (+3, +2), (-3, +2), (-2, 0), (-3, -2))  # using 'tuple' of two dimension
 print(f'Points: points = {points}')
 
 # -----------------------------------------------------------------------------
@@ -66,7 +67,7 @@ ax.scatter(point_gg_xx, point_gg_yy,
 
 ax.set_aspect('equal')
 ax.legend()
-fig.savefig('gm_c01_e_polygon_product.png')
+fig.savefig('gm_c01_e_polygon_product_fig.png')
 plt.show()
 
 # =============================================================================
